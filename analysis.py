@@ -3,18 +3,18 @@ from tkinter import messagebox
 import tkinter.font as font
 import argparse
 
+def descriptive_summary():
+    messagebox.showinfo("Option 1", "You clicked Option 1")
+
+def generate_histogram():
+    messagebox.showinfo("Option 2", "You clicked Option 2")
+
+def generate_pairplot():
+    messagebox.showinfo("Option 3", "You clicked Option 3")
 
 def opening_menu(username):
-
-    def option1():
-        messagebox.showinfo("Option 1", "You clicked Option 1")
-
-    def option2():
-        messagebox.showinfo("Option 2", "You clicked Option 2")
-
-    def option3():
-        messagebox.showinfo("Option 3", "You clicked Option 3")
-
+    
+    # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     # Create the main window
     root = tk.Tk()
     root.title("PETALIST || Iris Dataset Analysis")
@@ -32,25 +32,25 @@ def opening_menu(username):
     # https://www.geeksforgeeks.org/tkinter-fonts/
     font_buttons = font.Font(family='Agency FB', size=10, weight="bold")
     font_label_heading = font.Font(family='Agency FB', size=26, weight="bold")
-    font_label_text = font.Font(family='Agency FB', size=12)
+    font_label_text = font.Font(family='Agency FB', size=14)
 
     # Create labels for text
     label1 = tk.Label(root, fg="gray9", bg="white", text=f"Hello {username},", font=font_label_heading)
-    label1.place(relx=0.55, rely=0.2, anchor="sw")
-    label2 = tk.Label(root, fg="gray9", bg="white", text="\nWelcome to Petalist, the Iris dataset analysis program.\nPlease select one of the options below:                   .", font=font_label_text)
-    label2.place(relx=0.55, rely=0.3, anchor="sw")
+    label1.place(relx=0.54, rely=0.2, anchor="sw")
+    label2 = tk.Label(root, fg="gray9", bg="white", text="\nWelcome to Petalist, the Iris dataset analysis program.\nPlease select one of the options below:                      .", font=font_label_text)
+    label2.place(relx=0.54, rely=0.3, anchor="sw")
 
     # Create buttons
     # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
-    button1 = tk.Button(root, text=".get descriptive summary", command=option1, bg="white", fg="gray9")
+    button1 = tk.Button(root, text=".get descriptive summary", command=descriptive_summary, bg="white", fg="gray9")
     button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
     button1['font'] = font_buttons
 
-    button2 = tk.Button(root, text=".generate histogram", command=option2, bg="white", fg="gray9")
+    button2 = tk.Button(root, text=".generate histogram", command=generate_histogram, bg="white", fg="gray9")
     button2.place(relx=0.59, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
 
-    button3 = tk.Button(root, text=".generate pair scatter plot", command=option3, bg="white", fg="gray9")
+    button3 = tk.Button(root, text=".generate pair scatter plot", command=generate_pairplot, bg="white", fg="gray9")
     button3.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
 
