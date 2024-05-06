@@ -1,41 +1,36 @@
+import tkinter as tk
+from tkinter import messagebox
+import tkinter.font as font
+import argparse
 import seaborn as sns
 import pandas as pd
 
+# https://github.com/mwaskom/seaborn-data
+datasets_list = sns.get_dataset_names()
 
-def get_dataset():
+# Access the list returned by Seaborn with datasets names, filtering out the string
+# matching the 'iris' substring and adding it to a new list.
+# Then access the list with the returned name by indexing the result.
+iris_dataset = list(filter(lambda x: "iris" in x, datasets_list))[0]
 
-    # https://github.com/mwaskom/seaborn-data
-    datasets_list = sns.get_dataset_names()
+# Print dataset name (uncomment for sanity check) 
+#print(f"Dataset name is: {iris_dataset}")
 
-    # Access the list returned by Seaborn with datasets names, filtering out the string
-    # matching the 'iris' substring and adding it to a new list.
-    # Then access the list with the returned name by indexing the result.
-    iris_dataset = list(filter(lambda x: "iris" in x, datasets_list))[0]
+# Load the dataset which is a DataFrame object by default, as the Seaborn library is 
+# closely integrated with pandas data structures.
+# https://seaborn.pydata.org/generated/seaborn.load_dataset.html)]
+df = sns.load_dataset(iris_dataset)
 
-    # Sanity check: print dataset name
-    print(f"Dataset name is: {iris_dataset}")
+# Group the DataFrame by species for the below for loop
+df_species = df.groupby('species')
 
-    # Load the dataset which is a DataFrame object by default, as the Seaborn library is 
-    # closely integrated with pandas data structures.
-    # https://seaborn.pydata.org/generated/seaborn.load_dataset.html)]
-    df = sns.load_dataset(iris_dataset)
+# Initialize an empty string to store the summary
+summary = ''
 
-    return df
-
-
-df = get_dataset()
-
-df.info()
-
-
-
-This button calls descriptive_summary function in the the command param. 
-    button1 = tk.Button(root, text=".get descriptive summary", command=descriptive_summary, bg="white", fg="gray9")
-
-However, only the messagebox shows, the describe does not show in the terminal
-def descriptive_summary():
-    messagebox.showinfo("Text file with a descriptive summary of each variable", "Please return to the results directory to access the file.")
-
-    df = get_dataset()
-
-    df.describe()
+# Iterate over each group and generate summary statistics
+for species, group_df in df_species:
+    summary += f"Summary for  {species} species\n"
+    summary += group_df.describe(include='all').to_string() + "\n\n"
+ 
+with open("summary.txt", 'w', encoding='utf-8') as writer:
+        writer.write(summary)

@@ -5,7 +5,6 @@ import argparse
 import seaborn as sns
 import pandas as pd
 
-
 def get_dataset():
 
     # https://github.com/mwaskom/seaborn-data
@@ -30,9 +29,34 @@ def get_dataset():
 def descriptive_summary():
     messagebox.showinfo("Descriptive summary", "A text file with a descriptive summary of each variable will be saved in the results directory. Please click OK to open the file.")
 
+    # Call the get_dataset function to load the Iris dataset
     df = get_dataset()
 
-    print(df.describe())
+    # Group the DataFrame by species for the below for loop
+    # https://realpython.com/pandas-groupby/
+    df_species = df.groupby('species')
+
+    # Initialise an empty string as a container for the for loop iteration
+    summary = ''
+
+    '''
+    As we are grouping by multiple species, the group name will be a tuple so each group should be unpacked into two variables.
+    Each iteration will then generate summary statistics for each species, and concatenate it to the summary container.
+    https://realpython.com/python-for-loop/
+    https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
+    '''
+    for species, group in df_species:
+        summary += f"Summary statistics for {species} species\n"
+        summary += group.describe(include=all).to_string() + "\n\n"
+
+    '''
+    Use open() function in write ('w') mode to create the txt file jointly with 'with' keyword,
+    so that the file is properly closed after the program finishes. According to Python's official documention, encoding is 
+    recommended whenever we're using a text mode, otherwise te default encoding is platform dependent. "utf-8" is specified 
+    as it's the modern de-facto standard.
+    '''
+    with open("summary.txt", 'w', encoding='utf-8') as writer:
+        writer.write(summary)
 
 def generate_histogram():
     messagebox.showinfo("Option 2", "You clicked Option 2")
@@ -126,4 +150,3 @@ try:
 except: 
     # Print a help message, including the program usage and information about the arguments defined with the ArgumentParser
     parser.print_help()
-
