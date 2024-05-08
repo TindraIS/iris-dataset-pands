@@ -26,37 +26,40 @@ def get_dataset():
     # Return the DataFrame object
     return df
 
-def descriptive_summary():
+def descriptive_summary(df):
     messagebox.showinfo("Descriptive summary", "A text file with a descriptive summary of each variable will be saved in the results directory. Please click OK to open the file.")
 
-    # Call the get_dataset function to load the Iris dataset
-    df = get_dataset()
-
-    # Group the DataFrame by species for the below for loop
-    # https://realpython.com/pandas-groupby/
-    df_species = df.groupby('species')
-
-    # Initialise an empty string as a container for the for loop iteration
+    # Initialise an empty string to store the summary
     summary = ''
 
+    # Add overall summary, data types summary & summary header for each species
+    summary += f"(1) Overall Descriptive Statistics:\n{df.describe(include='all').to_string()}\n\n"
+    summary += f"(2) Data Types Summary:\n{df.dtypes.to_string()}\n\n"
+    summary += f"(3) Summary for Each Species:\n\n"
+
+    # Group the DataFrame by species & initialise counter for the below for loop
+    # https://realpython.com/pandas-groupby/
+    df_species = df.groupby('species')
+    counter = 0
+
+    # Iterate over each species and generate summary statistics
     '''
     As we are grouping by multiple species, the group name will be a tuple so each group should be unpacked into two variables.
     Each iteration will then generate summary statistics for each species, and concatenate it to the summary container.
     https://realpython.com/python-for-loop/
     https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
     '''
-    for species, group in df_species:
-        summary += f"Summary statistics for {species} species\n"
-        summary += group.describe(include=all).to_string() + "\n\n"
-
-    '''
-    Use open() function in write ('w') mode to create the txt file jointly with 'with' keyword,
-    so that the file is properly closed after the program finishes. According to Python's official documention, encoding is 
-    recommended whenever we're using a text mode, otherwise te default encoding is platform dependent. "utf-8" is specified 
-    as it's the modern de-facto standard.
-    '''
+    for species, group_df in df_species:
+        counter += 1
+        summary += f"3.{counter} Summary for {species}\n"
+        summary += f"a) Descriptive Statistics:\n{group_df.describe(include='all').to_string()}\n\n"
+        summary += f"b) Missing Values:\n{group_df.isnull().sum().to_string()}\n\n"  # Add missing values summary
+        summary += f"c) Unique Values:\n{group_df.nunique().to_string()}\n\n"  # Add unique values summary
+        summary += "\n\n"
+    
+    # Save summary in a txt file
     with open("summary.txt", 'w', encoding='utf-8') as writer:
-        writer.write(summary)
+            writer.write(summary)
 
 def generate_histogram():
     messagebox.showinfo("Option 2", "You clicked Option 2")
@@ -116,29 +119,27 @@ def opening_menu(username):
 # ---------------------------------- MAIN CODE ---------------------------------- #
 
 # Wrap code in a try-except statement to handle errors in case arguments are not provided in the cmd line
+'''
+Initialise the ArgumentParser object, will allows for cmd line arguments to be defined.
+Customise thethe parser by:
+    (1) specifying the program name that will be used in the usage message;
+    (2) defining a general description for the program and a closing message.
+The prog arg can be interpolatedprog into the epilog string using the old-style string formatting operator %.
+Given that f-strings replace names with their values as they run, the program will crashwith a NameError.
+
+Define optional arguments for the filename and the Wikipedia's query with the following params:
+    (1) Set long and short form flags;
+    (2) Set required to false so that the program don't throw an error if no arguments are provided in the cmd line, 
+        but rather handle the error in the below try-except statement;
+    (3) Set metavar to empty to clean up the -h message by not showing the uppercase dest values (FILENAME and QUERY);
+    (4) Set the helper with a brief description of what the argument does.
+'''
+
 try:
-    '''
-    Initialise the ArgumentParser object, will allows for cmd line arguments to be defined.
-    Customise thethe parser by:
-        (1) specifying the program name that will be used in the usage message;
-        (2) defining a general description for the program and a closing message.
-    The prog arg can be interpolatedprog into the epilog string using the old-style string formatting operator %.
-    Given that f-strings replace names with their values as they run, the program will crashwith a NameError.
-    '''
     parser = argparse.ArgumentParser(
     prog="analysis.py",
     description="Petalist is a program that runs an analysis on Fisher's Iris dataset.",
-    epilog="Thanks for using %()s!"
-    )
-
-    '''
-    Define optional arguments for the filename and the Wikipedia's query with the following params:
-        (1) Set long and short form flags;
-        (2) Set required to false so that the program don't throw an error if no arguments are provided in the cmd line, 
-            but rather handle the error in the below try-except statement;
-        (3) Set metavar to empty to clean up the -h message by not showing the uppercase dest values (FILENAME and QUERY);
-        (4) Set the helper with a brief description of what the argument does.
-    '''
+    epilog="Thanks for using %()s!")
     parser.add_argument("-n", "--username", metavar="", required=True, help='Please enter your name.')
     args = parser.parse_args()
 
@@ -146,7 +147,9 @@ try:
     USERNAME = args.username    # Assign the filename provided in the cmd line to FILENAME using the dot notation on args
     
     opening_menu(USERNAME)
-
+    df = get_dataset()
+    descriptive_summary(df)
+    
 except: 
     # Print a help message, including the program usage and information about the arguments defined with the ArgumentParser
     parser.print_help()
