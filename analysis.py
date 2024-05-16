@@ -36,10 +36,12 @@ try:
 
     # Declare variables 
     USERNAME = args.username    # Assign the filename provided in the cmd line to FILENAME using the dot notation on args
-    
-    opening_menu(USERNAME)
-    df = get_dataset()
-    descriptive_summary(df)
+    df = tools.get_dataset()
+    descriptive_summary = tools.descriptive_summary
+    generate_histogram = tools.generate_histogram  
+    generate_pairplot = tools.generate_pairplot 
+
+    tools.opening_menu(USERNAME, df, descriptive_summary, generate_histogram, generate_pairplot)
     
 except: 
     # Print a help message, including the program usage and information about the arguments defined with the ArgumentParser
