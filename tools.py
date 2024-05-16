@@ -62,9 +62,15 @@ def descriptive_summary(df):
     for species, group_df in df_species:
         counter += 1
         summary += f"3.{counter} Summary for {species}\n"
-        summary += f"a) Descriptive Statistics:\n{group_df.describe(include='all').to_string()}\n\n"
-        summary += f"b) Missing Values:\n{group_df.isnull().sum().to_string()}\n\n"  # Add missing values summary
-        summary += f"c) Unique Values:\n{group_df.nunique().to_string()}\n\n"  # Add unique values summary
+
+        descriptive_statistics = group_df.describe(include='all').to_string() 
+        summary += f"a) Descriptive Statistics:\n{descriptive_statistics}\n\n" # Add descriptive statistics summary with pd.describe()
+        
+        missing_values = group_df.isnull().sum().to_string()
+        summary += f"b) Missing Values:\n{missing_values}\n\n"  # Add missing values summary with pd.isnull()
+        
+        unique_values = group_df.nunique().to_string()
+        summary += f"c) Unique Values:\n{unique_values}\n\n"  # Add unique values summary with pd.nunique()
         summary += "\n\n"
     
     # III.
