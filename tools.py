@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import tkinter.font as font
 import seaborn as sns
+import matplotlib.pyplot as plt
 import pandas as pd
 import os
 
@@ -25,6 +26,7 @@ def get_dataset():
 
     # Return the DataFrame object
     return df
+
 
 def descriptive_summary(df):
     '''
@@ -97,10 +99,67 @@ def descriptive_summary(df):
     else:
          pass
 
-def generate_histogram():
-    messagebox.showinfo("Generate histogram", "You clicked Option 2")
+
+def generate_histogram(df):
+    '''
+    This function saves a histogram of each variable in the Iris dataset to PNG files.
+    '''
+    # I. 
+    # Get the list of columns names in the DataFrame
+    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
+    variables = df.select_dtypes(include='number').columns
+    
+    # Dynamically calculate the number of rows and columns for the subplots
+    num_variables = len(variables)       # Check how many variables the dataset contains
+    num_rows = (num_variables + 1) // 2  # Ensure there are at least 2 plots per row
+    num_columns = 2                    # Create 2 columns
+    
+    # II.
+    # Create subplots
+    fig, axes = plt.subplots(num_rows, num_columns, figsize=(12, 8))
+    
+    # Plot histograms for each variable
+    # https://napsterinblue.github.io/notes/python/viz/subplots/
+    # https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
+    # Flatten the axes array
+    axes = axes.flatten()           
+
+    # Use enumerate() to get both the index and value of each pair
+    for index, (col, ax) in enumerate(zip(variables, axes)):
+        ax.hist(df[col], bins=20, color='sandybrown', edgecolor='black')
+        ax.set_title(col)
+        ax.set_xlabel('Value')
+        ax.set_ylabel('Frequency')
+        
+        # Cleanup the remainder unused subplots
+        if index + 1 >= num_variables:
+            [ax.set_visible(False) for ax in axes.flatten()[index+1:]]
+            break
+    
+    # Adjust layout & set subplot suptitle
+    plt.tight_layout()
+    plt.suptitle("Distribution of Variables in the Iris Dataset\n")
+
+    # III.
+    # Save plot
+    file_path = os.path.join(os.getcwd(), 'histograms', 'histograms.png')
+    fig.savefig(fname=file_path)      
+
+    # IV. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Generate histograms", "A histogram of each variable will be plotted and saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    # https://docs.python.org/3/library/os.html#os.startfile
+    if response:
+        os.startfile(file_path)
+    else:
+         pass
 
 def generate_pairplot():
+    '''
+    This function outputs a scatter plot of each pair of variables of the Iris dataset.
+    '''
     messagebox.showinfo("Option 3", "You clicked Option 3")
 
 
@@ -134,11 +193,12 @@ def opening_menu(username, df, descriptive_summary, generate_histogram, generate
 
     # Create buttons
     # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
+    # https://stackoverflow.com/questions/70406400/understanding-python-lambda-behavior-with-tkinter-button
     button1 = tk.Button(root, text=".get descriptive summary", command=lambda: descriptive_summary(df), bg="white", fg="gray9")
     button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
     button1['font'] = font_buttons
 
-    button2 = tk.Button(root, text=".generate histogram", command=generate_histogram, bg="white", fg="gray9")
+    button2 = tk.Button(root, text=".generate histogram", command=lambda: generate_histogram(df), bg="white", fg="gray9")
     button2.place(relx=0.59, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
 
