@@ -37,7 +37,12 @@ def descriptive_summary(df):
         https://realpython.com/pandas-groupby/
         https://realpython.com/python-for-loop/
         https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
-    III. Save summary in a txt file with writer mode
+    III. Save summary in a txt file with writer mode. As per Python official documentation, the file param in open() is a path-like object giving the pathname.
+        Therefore, to keep the repository nicely organised, we can specify the folder where the file should be saved. As the program is meant to be ran on different
+        machines, the os module is used to get a relative path, as an absolute path would throw an error. 
+        https://docs.python.org/3/library/functions.html#open
+        https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+        https://docs.python.org/3/library/os.path.html
     IV. Show message box & open the summary.txt file with the default text editor. As per Python documentation, 
         askokcancel returns a boolean value, so we check if response is True(OK) to open the file; otherwise we do nothing.
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
@@ -73,9 +78,13 @@ def descriptive_summary(df):
         summary += f"c) Unique Values:\n{unique_values}\n\n"  # Add unique values summary with pd.nunique()
         summary += "\n\n"
     
+
     # III.
+    # Specify folder in which txt should be saved
+    file_path = os.path.join(os.getcwd(), 'descriptive summary', 'summary.txt')
+
     # Save summary in a txt file
-    with open("summary.txt", 'w', encoding='utf-8') as writer:
+    with open(file_path, 'w', encoding='utf-8') as writer:
             writer.write(summary)
     
     # IV. 
