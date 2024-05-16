@@ -5,6 +5,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
+import sys
+
 
 def get_dataset():
 
@@ -95,7 +97,7 @@ def descriptive_summary(df):
 
     # If response is True open the file, otherwise do nothing
     if response:
-        os.system("summary.txt")
+        os.startfile(file_path)
     else:
          pass
 
@@ -141,8 +143,10 @@ def generate_histogram(df):
     plt.suptitle("Distribution of Variables in the Iris Dataset\n")
 
     # III.
-    # Save plot
+    # Specify folder in which PNG should be saved
     file_path = os.path.join(os.getcwd(), 'histograms', 'histograms.png')
+
+    # Save plot
     fig.savefig(fname=file_path)      
 
     # IV. 
@@ -150,12 +154,14 @@ def generate_histogram(df):
     response = messagebox.askokcancel("Generate histograms", "A histogram of each variable will be plotted and saved in the results directory. Please click OK to open the file.")
 
     # If response is True open the file, otherwise do nothing
-    # https://docs.python.org/3/library/os.html#os.startfile
     if response:
-        os.startfile(file_path)
+        fig.show()
     else:
          pass
 
+
+    
+    
 def generate_pairplot():
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
