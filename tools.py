@@ -3,6 +3,7 @@ from tkinter import messagebox
 import tkinter.font as font
 import seaborn as sns
 import pandas as pd
+import os
 
 def get_dataset():
 
@@ -26,7 +27,24 @@ def get_dataset():
     return df
 
 def descriptive_summary(df):
+    '''
+    This function creates a descriptive statistic summary of the variables in the Iris dataset.
+    I.: Initialise an empty string to store the summary and then we add overall summary, data types summary & 
+        summary header for each species.
+    II.: Group the DataFrame by species & initialise a counter to be used to loop through them, as demonstrated in one of the lectures.
+        Start the for loop - as we are grouping by multiple species, the group name will be a tuple so each group should be unpacked into two variables.
+        Each iteration will then generate summary statistics for each species, and concatenate it to the summary container.
+        https://realpython.com/pandas-groupby/
+        https://realpython.com/python-for-loop/
+        https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
+    III. Save summary in a txt file with writer mode
+    IV. Show message box & open the summary.txt file with the default text editor. As per Python documentation, 
+        askokcancel returns a boolean value, so we check if response is True(OK) to open the file; otherwise we do nothing.
+        https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+        https://docs.python.org/3/library/tkinter.messagebox.html
+    '''
 
+    # I.
     # Initialise an empty string to store the summary
     summary = ''
 
@@ -35,18 +53,12 @@ def descriptive_summary(df):
     summary += f"(2) Data Types Summary:\n{df.dtypes.to_string()}\n\n"
     summary += f"(3) Summary for Each Species:\n\n"
 
+    # II.
     # Group the DataFrame by species & initialise counter for the below for loop
-    # https://realpython.com/pandas-groupby/
     df_species = df.groupby('species')
     counter = 0
 
     # Iterate over each species and generate summary statistics
-    '''
-    As we are grouping by multiple species, the group name will be a tuple so each group should be unpacked into two variables.
-    Each iteration will then generate summary statistics for each species, and concatenate it to the summary container.
-    https://realpython.com/python-for-loop/
-    https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
-    '''
     for species, group_df in df_species:
         counter += 1
         summary += f"3.{counter} Summary for {species}\n"
@@ -55,11 +67,20 @@ def descriptive_summary(df):
         summary += f"c) Unique Values:\n{group_df.nunique().to_string()}\n\n"  # Add unique values summary
         summary += "\n\n"
     
+    # III.
     # Save summary in a txt file
     with open("summary.txt", 'w', encoding='utf-8') as writer:
             writer.write(summary)
     
-    messagebox.showinfo("Descriptive summary", "A text file with a descriptive summary of each variable will be saved in the results directory. Please click OK to open the file.")
+    # IV. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Descriptive summary", "A text file with a descriptive summary of each variable will be saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    if response:
+        os.system("summary.txt")
+    else:
+         pass
 
 def generate_histogram():
     messagebox.showinfo("Generate histogram", "You clicked Option 2")
