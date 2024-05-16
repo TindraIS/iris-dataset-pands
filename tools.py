@@ -68,7 +68,7 @@ def generate_pairplot():
     messagebox.showinfo("Option 3", "You clicked Option 3")
 
 
-def opening_menu(username):
+def opening_menu(username, df, descriptive_summary, generate_histogram, generate_pairplot):
 
     # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     # Create the main window
