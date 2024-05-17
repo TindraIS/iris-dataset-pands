@@ -85,7 +85,9 @@ def descriptive_summary(df):
 
     # III.
     # Specify folder in which txt should be saved
-    file_path = os.path.join(os.getcwd(), 'descriptive summary', 'summary.txt')
+    folder = 'results'
+    file_name = 'summary.txt'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Save summary in a txt file
     with open(file_path, 'w', encoding='utf-8') as writer:
@@ -144,7 +146,9 @@ def generate_histogram(df):
 
     # III.
     # Specify folder in which PNG should be saved
-    file_path = os.path.join(os.getcwd(), 'histograms', 'histograms.png')
+    folder = 'results'
+    file_name = 'histograms.png'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Save plot
     fig.savefig(fname=file_path)      
@@ -164,6 +168,7 @@ def generate_pairplot(df):
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
     '''
+    # I.
     # Plot a pairplot to analyse the interaction between the different variables
     # https://python-charts.com/correlation/pairs-plot-seaborn/
     sns.pairplot(df, hue="species", corner=True, kind="reg", plot_kws={'line_kws':{'color':'black'}})
@@ -172,14 +177,16 @@ def generate_pairplot(df):
     plt.tight_layout()
     plt.suptitle("Attribute Pairs by Species", fontsize=16)
 
-    # III.
+    # II.
     # Specify folder in which PNG should be saved
-    file_path = os.path.join(os.getcwd(), 'pair plot', 'pairplot.png')
+    folder = 'results'
+    file_name = 'pairplot.png'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Save plot
     plt.savefig(fname=file_path)      
 
-    # IV. 
+    # III. 
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
 
@@ -188,9 +195,7 @@ def generate_pairplot(df):
         plt.show()
     else:
          pass
-
-    messagebox.showinfo("Option 3", "You clicked Option 3")
-
+    
 
 def opening_menu(username, df, descriptive_summary, generate_histogram, generate_pairplot):
 
