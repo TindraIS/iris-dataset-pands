@@ -228,17 +228,20 @@ def opening_menu(username, df, descriptive_summary, generate_histogram, generate
     # Create buttons
     # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
     # https://stackoverflow.com/questions/70406400/understanding-python-lambda-behavior-with-tkinter-button
-    button1 = tk.Button(root, text=".get descriptive summary", command=lambda: descriptive_summary(df), bg="white", fg="gray9")
+    # https://tk-tutorial.readthedocs.io/en/latest/button/button.html
+    # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/button.html
+    button1 = tk.Button(root, text=" .get descriptive summary", height=1, width=25,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="LightSteelBlue4", fg="white")
     button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
     button1['font'] = font_buttons
 
-    button2 = tk.Button(root, text=".generate histogram", command=lambda: generate_histogram(df), bg="white", fg="gray9")
-    button2.place(relx=0.59, rely=0.5, anchor="center")  # Place button relative to the center of the window
+    button2 = tk.Button(root, text=" .generate histogram", height=1, width=25,  anchor="w", justify="left", command=lambda: generate_histogram(df), bg="LightSteelBlue4", fg="white")
+    button2.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
 
-    button3 = tk.Button(root, text=".generate pair scatter plot", command=lambda: generate_pairplot(df), bg="white", fg="gray9")
+    button3 = tk.Button(root, text=" .generate pair scatter plot", height=1, width=25, anchor="w", justify="left", command=lambda: generate_pairplot(df), bg="LightSteelBlue4", fg="white")
     button3.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
+
 
     # Maximize the window
     root.state('zoomed')
