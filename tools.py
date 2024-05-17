@@ -33,9 +33,9 @@ def get_dataset():
 def descriptive_summary(df):
     '''
     This function creates a descriptive statistic summary of the variables in the Iris dataset.
-    I.: Initialise an empty string to store the summary and then we add overall summary, data types summary & 
+    I. Initialise an empty string to store the summary and then we add overall summary, data types summary & 
         summary header for each species.
-    II.: Group the DataFrame by species & initialise a counter to be used to loop through them, as demonstrated in one of the lectures.
+    II. Group the DataFrame by species & initialise a counter to be used to loop through them, as demonstrated in one of the lectures.
         Start the for loop - as we are grouping by multiple species, the group name will be a tuple so each group should be unpacked into two variables.
         Each iteration will then generate summary statistics for each species, and concatenate it to the summary container.
         https://realpython.com/pandas-groupby/
@@ -160,12 +160,35 @@ def generate_histogram(df):
          pass
 
 
-    
-    
-def generate_pairplot():
+def generate_pairplot(df):
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
     '''
+    # Plot a pairplot to analyse the interaction between the different variables
+    # https://python-charts.com/correlation/pairs-plot-seaborn/
+    sns.pairplot(df, hue="species", corner=True, kind="reg", plot_kws={'line_kws':{'color':'black'}})
+
+    # Adjust layout & set subplot suptitle
+    plt.tight_layout()
+    plt.suptitle("Attribute Pairs by Species", fontsize=16)
+
+    # III.
+    # Specify folder in which PNG should be saved
+    file_path = os.path.join(os.getcwd(), 'pair plot', 'pairplot.png')
+
+    # Save plot
+    plt.savefig(fname=file_path)      
+
+    # IV. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    if response:
+        plt.show()
+    else:
+         pass
+
     messagebox.showinfo("Option 3", "You clicked Option 3")
 
 
@@ -208,7 +231,7 @@ def opening_menu(username, df, descriptive_summary, generate_histogram, generate
     button2.place(relx=0.59, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
 
-    button3 = tk.Button(root, text=".generate pair scatter plot", command=generate_pairplot, bg="white", fg="gray9")
+    button3 = tk.Button(root, text=".generate pair scatter plot", command=lambda: generate_pairplot(df), bg="white", fg="gray9")
     button3.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
 
