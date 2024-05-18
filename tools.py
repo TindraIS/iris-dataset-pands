@@ -365,7 +365,10 @@ def opening_menu(username, df, df_cleaned):
     root.title("PETALIST || Iris Dataset Analysis")
 
     # Load image
-    image = tk.PhotoImage(file="C:/Users/ifs/OneDrive/Documents/ATU/Programming & Scripting/pands-project/images/menu_background_.png")
+    folder = 'images'
+    file_name = 'menu_background.png'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+    image = tk.PhotoImage(file=file_path)
     image = image.subsample(2, 2)  # Resize by a factor of 2 in both dimensions
 
     # Create a label to display the image
