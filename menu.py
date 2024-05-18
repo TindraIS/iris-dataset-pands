@@ -26,15 +26,30 @@ def opening_menu(username, df, df_cleaned):
     # https://pythonexamples.org/python-tkinter-button-change-font/
     # https://www.geeksforgeeks.org/tkinter-fonts/
     font_buttons = font.Font(family='Sitka Small', size=8, weight="bold")
+    font_options = font.Font(family='Sitka Small', size=8)
     font_label_heading = font.Font(family='Sitka Small', size=26, weight="bold")
     font_label_text = font.Font(family='Sitka Small', size=10)
 
     # Create labels for text
-    label1 = tk.Label(root, fg="#5E7F73", bg="white", text=f"Hello {username},", font=font_label_heading)
+    label1 = tk.Label(root, 
+                      fg="#5E7F73", bg="white", 
+                      text=f"Hello {username},", 
+                      font=font_label_heading)
     label1.place(relx=0.50, rely=0.3, anchor="sw")
-    label2 = tk.Label(root, fg="#5E7F73", bg="white", text="Welcome to Petalist, the Iris dataset analysis \nprogram. Please select one of the options below:", font=font_label_text, anchor='w')
+    label2 = tk.Label(root, 
+                      fg="#5E7F73", bg="white", 
+                      text="Welcome to Petalist, the Iris dataset analysis \nprogram. Please select one of the options below:", 
+                      font=font_label_text, anchor='w')
     label2.place(relx=0.50, rely=0.4, anchor="sw")
 
+    # Define buttons configurations
+    button_height = 1
+    button_width = 30
+    button_anchor = "w"
+    button_justify = "left"
+    button_bg = "#5E7F73"
+    button_fg = "white"
+    
     # Create buttons
     # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
     # https://stackoverflow.com/questions/70406400/understanding-python-lambda-behavior-with-tkinter-button
@@ -43,7 +58,15 @@ def opening_menu(username, df, df_cleaned):
 
     # Button 1--------------------------------------------------------------------
 
-    button1 = tk.Button(root, text=" .get descriptive summary", height=1, width=30,  anchor="w", justify="left", command=lambda: tools.descriptive_summary(df), bg="#5E7F73", fg="white")
+    button1 = tk.Button(root, 
+                        text=" .get descriptive summary", 
+                        command=lambda: tools.descriptive_summary(df),
+                        width=button_width, 
+                        height=button_height, 
+                        anchor=button_anchor, 
+                        justify=button_justify, 
+                        bg=button_bg, 
+                        fg=button_fg)
     button1.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button1['font'] = font_buttons
 
@@ -53,9 +76,9 @@ def opening_menu(username, df, df_cleaned):
     # Create the list of options & a dictionary mapping options to their respective functions
     options_list = ["Get a summary of outliers", "Remove outliers from the dataset"] 
     option_functions = {
-    "Get a summary of outliers": tools.outliers_summary,
-    "Remove outliers from the dataset": tools.outliers_cleanup
-    }
+        "Get a summary of outliers": tools.outliers_summary,
+        "Remove outliers from the dataset": tools.outliers_cleanup
+        }
     
     # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
     value_inside = tk.StringVar(root," .identify & handle outliers") 
@@ -67,8 +90,13 @@ def opening_menu(username, df, df_cleaned):
     button2.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
 
     # Se the background color of Options Menu & displayed options
-    button2.config(bg="#5E7F73", fg="white", height=1, width=23, anchor="w", justify="left")
-    button2["menu"].config(bg="#7A9F92")
+    button2.config(width=23, 
+                   height=button_height, 
+                   anchor=button_anchor, 
+                   justify=button_justify, 
+                   bg=button_bg, 
+                   fg=button_fg)
+    button2["menu"].config(bg="#7A9F92",fg='white',font=font_options)
 
     # Configure the OptionMenu to call the appropriate function when an option is selected
     for option in options_list:
@@ -76,14 +104,30 @@ def opening_menu(username, df, df_cleaned):
 
     # Button 3 --------------------------------------------------------------------
 
-    button3 = tk.Button(root, text=" .generate pair scatter plot", height=1, width=30, anchor="w", justify="left", command=lambda: tools.generate_pairplot(df), bg="#5E7F73", fg="white")
+    button3 = tk.Button(root, 
+                        text=" .generate pair scatter plot", 
+                        command=lambda: tools.generate_pairplot(df),
+                        width=button_width, 
+                        height=button_height, 
+                        anchor=button_anchor, 
+                        justify=button_justify, 
+                        bg=button_bg, 
+                        fg=button_fg)
     button3.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
 
     
     # Button 4 --------------------------------------------------------------------
     
-    button4 = tk.Button(root, text=" .generate histogram", height=1, width=30,  anchor="w", justify="left", command=lambda: tools.generate_histogram_options(df, df_cleaned), bg="#5E7F73", fg="white")
+    button4 = tk.Button(root, 
+                        text=" .generate histogram",  
+                        command=lambda: tools.generate_histogram_options(df, df_cleaned),
+                        width=button_width, 
+                        height=button_height, 
+                        anchor=button_anchor, 
+                        justify=button_justify, 
+                        bg=button_bg, 
+                        fg=button_fg)
     button4.place(relx=0.60, rely=0.8, anchor="center")  # Place button relative to the center of the window
     button4['font'] = font_buttons
 
