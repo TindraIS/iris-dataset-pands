@@ -383,9 +383,29 @@ def opening_menu(username, df):
 
     # Button 1--------------------------------------------------------------------
 
-    button1 = tk.Button(root, text=" .get descriptive summary", height=1, width=25,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="LightSteelBlue4", fg="white")
-    button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
+    # Create the list of options & a dictionary mapping options to their respective functions
+    options_list = ["Get a summary of outliers", "Remove outliers from the dataset"] 
+    option_functions = {
+    "Get a summary of outliers": outliers_summary,
+    "Remove outliers from the dataset": outliers_cleanup
+    }
+    
+    # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
+    value_inside = tk.StringVar(root," .identify & handle outliers") 
+    
+    # Create the optionmenu widget and passing the options_list and value_inside to it 
+    # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
+    button1 = tk.OptionMenu(root, value_inside, *options_list) 
     button1['font'] = font_buttons
+    button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
+
+    # Se the background color of Options Menu & displayed options
+    button1.config(bg="LightSteelBlue4", fg="white", height=1, width=20, anchor="w", justify="left")
+    button1["menu"].config(bg="LightSteelBlue3")
+
+    # Configure the OptionMenu to call the appropriate function when an option is selected
+    for option in options_list:
+        button1["menu"].entryconfig(option, command=lambda opt=option: option_functions[opt](df))
 
     # Button 2 --------------------------------------------------------------------
 
@@ -401,29 +421,10 @@ def opening_menu(username, df):
 
     
     # Button 4 --------------------------------------------------------------------
-    # Create the list of options & a dictionary mapping options to their respective functions
-    options_list = ["Get a summary of outliers", "Remove outliers from the dataset"] 
-    option_functions = {
-    "Get a summary of outliers": outliers_summary,
-    "Remove outliers from the dataset": outliers_cleanup
-    }
     
-    # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
-    value_inside = tk.StringVar(root," .identify & handle outliers") 
-    
-    # Create the optionmenu widget and passing the options_list and value_inside to it 
-    # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
-    button4 = tk.OptionMenu(root, value_inside, *options_list) 
-    button4['font'] = font_buttons
+    button4 = tk.Button(root, text=" .get descriptive summary", height=1, width=25,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="LightSteelBlue4", fg="white")
     button4.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
-
-    # Se the background color of Options Menu & displayed options
-    button4.config(bg="LightSteelBlue4", fg="white", height=1, width=20, anchor="w", justify="left")
-    button4["menu"].config(bg="LightSteelBlue3")
-
-    # Configure the OptionMenu to call the appropriate function when an option is selected
-    for option in options_list:
-        button4["menu"].entryconfig(option, command=lambda opt=option: option_functions[opt](df))
+    button4['font'] = font_buttons
 
     # Maximize the window
     root.state('zoomed')
