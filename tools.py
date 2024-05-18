@@ -56,15 +56,24 @@ def descriptive_summary(df):
     '''
 
     # I.
+    print(f"\nStarting {__name__}/descriptive_summary()")
+
     # Initialise an empty string to store the summary
     summary = ''
 
     # Add overall summary, data types summary & summary header for each species
-    summary += f"(1) Overall Descriptive Statistics:\n{df.describe(include='all').to_string()}\n\n"
-    summary += f"(2) Data Types Summary:\n{df.dtypes.to_string()}\n\n"
-    summary += f"(3) Summary for Each Species:\n\n"
+    descriptive_statistics = df.describe(include='all').to_string() 
+    summary += f"(1) Overall Descriptive Statistics:\n{descriptive_statistics}\n\n"
+    
+    missing_values = df.isnull().sum().to_string()
+    summary += f"(2) Data Types Summary:\n{missing_values}\n\n"
+    
+    print(f'\n\tOverall summary computed.')
+
 
     # II.
+    summary += f"(3) Summary for Each Species:\n\n"
+
     # Group the DataFrame by species & initialise counter for the below for loop
     df_species = df.groupby('species')
     counter = 0
@@ -84,6 +93,7 @@ def descriptive_summary(df):
         summary += f"c) Unique Values:\n{unique_values}\n\n"  # Add unique values summary with pd.nunique()
         summary += "\n\n"
     
+    print(f'\tSpecies summary computed.')
 
     # III.
     # Specify folder in which txt should be saved
@@ -94,7 +104,8 @@ def descriptive_summary(df):
     # Save summary in a txt file
     with open(file_path, 'w', encoding='utf-8') as writer:
             writer.write(summary)
-    
+    print(f"\tDescriptive summaries added to the txt file.")
+
     # IV. 
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Descriptive summary", "A text file with a descriptive summary of each variable will be saved in the results directory. Please click OK to open the file.")
@@ -102,14 +113,17 @@ def descriptive_summary(df):
     # If response is True open the file, otherwise do nothing
     if response:
         os.startfile(file_path)
+        print(f"\tUser opened file.")
     else:
-         pass
-
+        print(f"\tUser closed pop-up.")
+    
+    # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    print("\n\t\u2713 Descriptive summary function succesfully finished.")
 
 # _____________________ OUTLIERS _____________________
 def outliers_summary(df):
 
-    print(f"Starting {__name__}")
+    print(f"Starting {__name__}/outliers_summary()")
     
     # Get the list of columns names in the DataFrame
     # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
@@ -186,7 +200,7 @@ def outliers_summary(df):
     print("\n\t\u2713 Outliers summary function succesfully finished.")
 
 def outliers_cleanup(df):
-    print(f"Starting {__name__}")
+    print(f"Starting {__name__}/outliers_cleanup()")
     
     # Get the list of columns names in the DataFrame
     variables = df.select_dtypes(include='number').columns
@@ -241,7 +255,7 @@ def outliers_cleanup(df):
 
     # 
     # Display message box with "OK" and "Cancel" buttons
-    response = messagebox.askokcancel("Remove outliers from the dataset ", "A csv. file containing the cleaned dataset has been created. Please click OK to open the file.")
+    response = messagebox.askokcancel("Outliers summary", "A text file with an outlier summary by species will be saved in the results directory. Please click OK to open the file.")
 
     # If response is True save the df as a .csv, otherwise do nothing
     if response:
