@@ -328,7 +328,7 @@ def outliers_cleanup(df):
     return df
         
 
-def opening_menu(username, df, descriptive_summary, generate_histogram, generate_pairplot):
+def opening_menu(username, df):
 
     # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     # Create the main window
