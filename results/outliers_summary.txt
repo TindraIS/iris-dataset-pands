@@ -1,0 +1,42 @@
+
+>>> Outlier summary for setosa <<<
+
+		No outliers found for sepal_length
+
+		Outliers found for sepal_width: 
+			Lower bound: [41] 
+			Upper bound: [15]
+
+		Outliers found for petal_length: 
+			Lower bound: [13 22] 
+			Upper bound: [24 44]
+
+		Outliers found for petal_width: 
+			Lower bound: [] 
+			Upper bound: [23 43]
+
+>>> Outlier summary for versicolor <<<
+
+		No outliers found for sepal_length
+
+		No outliers found for sepal_width
+
+		Outliers found for petal_length: 
+			Lower bound: [48] 
+			Upper bound: []
+
+		No outliers found for petal_width
+
+>>> Outlier summary for virginica <<<
+
+		Outliers found for sepal_length: 
+			Lower bound: [6] 
+			Upper bound: []
+
+		Outliers found for sepal_width: 
+			Lower bound: [19] 
+			Upper bound: [17 31]
+
+		No outliers found for petal_length
+
+		No outliers found for petal_width

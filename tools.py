@@ -4,6 +4,7 @@ import tkinter.font as font
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 import os
 import sys
 
@@ -195,7 +196,86 @@ def generate_pairplot(df):
         plt.show()
     else:
          pass
+
+
+def outliers_summary(df):
+
+    print(f"Starting {__name__}")
     
+    # Get the list of columns names in the DataFrame
+    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
+    variables = df.select_dtypes(include='number').columns
+    outlier_summary = []  # Initialize an empty list to store outlier information
+
+    # Iterate over unique species values
+    for species in df['species'].unique():
+        # Filter dataframe for the current species
+        df_species = df[df['species'] == species]
+        print(f'\n\tLooping through {species}...')
+        outlier_summary.append(f'\n>>> Outlier summary for {species} <<<\n')
+
+        lower_array_agg = []
+        upper_array_agg = []
+
+        for var in variables: 
+            # Calculate the upper and lower limits
+            Q1 = df_species[var].quantile(0.25) # The 1st quartile is the value below which 25% of the data can be found
+            Q3 = df_species[var].quantile(0.75) # The 3rd quartile is the value below which 75% of the data falls
+
+            # Calculate the IQR, which measures the middle 50% of the data
+            IQR = Q3 - Q1
+
+            # Calculate the outlier thresholds as per the above formulas
+            # Any data point below/above these values are considered outliers
+            lower = Q1 - 1.5 * IQR
+            upper = Q3 + 1.5 * IQR
+            
+            # Create arrays of Boolean values indicating the outlier rows using Numpy’s `where` function
+            # to find indices of all data points where the variable does meets the threshold condition
+            # https://numpy.org/doc/stable/reference/generated/numpy.where.html
+            upper_array = np.where(df_species[var] >= upper)[0]
+            lower_array = np.where(df_species[var] <= lower)[0]
+
+            lower_array_agg.append(lower_array)
+            upper_array_agg.append(upper_array)
+
+        # Check if any of the arrays contain outliers and append accordingly to the list.
+        # Combine the variables and the arrays into a single iterable with zip() and loop through them 
+        for var, lower_array, upper_array in zip(variables, lower_array_agg, upper_array_agg):
+            # If any of the arrays isn't empty, append the outlier information to the list
+            if len(lower_array) > 0 or len(upper_array) > 0:
+                outlier_summary.append(f'\n\t\tOutliers found for {var}: \n\t\t\tLower bound: {lower_array} \n\t\t\tUpper bound: {upper_array}\n')
+                print(f"\t\tOutlier summary for {var} appended to the array.")
+            # If the arrays are empty, do nothing to prevent cluttering the list
+            else:
+                outlier_summary.append(f'\n\t\tNo outliers found for {var}\n')
+                print(f"\t\tOutlier summary for {var} appended to the array.")
+    
+    # III.
+    # Specify folder in which txt should be saved
+    folder = 'results'
+    file_name = 'outliers_summary.txt'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+
+    # Write the collected outlier information to a text file
+    with open(file_path, "w") as file:
+        for item in outlier_summary:
+            file.write(item)
+        print(f"\t\tOutlier summary for all variables for appended to the txt file.")
+
+    # IV. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    if response:
+        os.startfile(file_path)
+    else:
+         pass
+    
+    # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    print("\n\t\u2713 Outliers function succesfully finished.")
+
 
 def opening_menu(username, df, descriptive_summary, generate_histogram, generate_pairplot):
 
@@ -242,6 +322,9 @@ def opening_menu(username, df, descriptive_summary, generate_histogram, generate
     button3.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
 
+    button4 = tk.Button(root, text=" .identify & handle outliers", height=1, width=25, anchor="w", justify="left", command=lambda: outliers_summary(df), bg="LightSteelBlue4", fg="white")
+    button4.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
+    button4['font'] = font_buttons
 
     # Maximize the window
     root.state('zoomed')

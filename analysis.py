@@ -3,6 +3,7 @@ from tkinter import messagebox
 import tkinter.font as font
 import argparse
 import seaborn as sns
+import matplotlib.pyplot as plt
 import pandas as pd
 import tools
 
