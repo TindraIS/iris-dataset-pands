@@ -396,6 +396,13 @@ def opening_menu(username, df, df_cleaned):
 
     # Button 1--------------------------------------------------------------------
 
+    button1 = tk.Button(root, text=" .get descriptive summary", height=1, width=30,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="#5E7F73", fg="white")
+    button1.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
+    button1['font'] = font_buttons
+
+
+    # Button 2 --------------------------------------------------------------------
+
     # Create the list of options & a dictionary mapping options to their respective functions
     options_list = ["Get a summary of outliers", "Remove outliers from the dataset"] 
     option_functions = {
@@ -408,23 +415,17 @@ def opening_menu(username, df, df_cleaned):
     
     # Create the optionmenu widget and passing the options_list and value_inside to it 
     # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
-    button1 = tk.OptionMenu(root, value_inside, *options_list) 
-    button1['font'] = font_buttons
-    button1.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
+    button2 = tk.OptionMenu(root, value_inside, *options_list) 
+    button2['font'] = font_buttons
+    button2.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
 
     # Se the background color of Options Menu & displayed options
-    button1.config(bg="#5E7F73", fg="white", height=1, width=23, anchor="w", justify="left")
-    button1["menu"].config(bg="#7A9F92")
+    button2.config(bg="#5E7F73", fg="white", height=1, width=23, anchor="w", justify="left")
+    button2["menu"].config(bg="#7A9F92")
 
     # Configure the OptionMenu to call the appropriate function when an option is selected
     for option in options_list:
-        button1["menu"].entryconfig(option, command=lambda opt=option: option_functions[opt](df))
-
-    # Button 2 --------------------------------------------------------------------
-
-    button2 = tk.Button(root, text=" .generate histogram", height=1, width=30,  anchor="w", justify="left", command=lambda: generate_histogram_options(df, df_cleaned), bg="#5E7F73", fg="white")
-    button2.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
-    button2['font'] = font_buttons
+        button2["menu"].entryconfig(option, command=lambda opt=option: option_functions[opt](df))
 
     # Button 3 --------------------------------------------------------------------
 
