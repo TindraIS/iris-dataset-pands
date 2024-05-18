@@ -8,7 +8,7 @@ import numpy as np
 import os
 import sys
 
-
+# _____________________ GET IRIS _____________________
 def get_dataset():
 
     # https://github.com/mwaskom/seaborn-data
@@ -31,6 +31,7 @@ def get_dataset():
     return df
 
 
+# _____________________ TXT SUMMARY _____________________
 def descriptive_summary(df):
     '''
     This function creates a descriptive statistic summary of the variables in the Iris dataset.
@@ -105,15 +106,7 @@ def descriptive_summary(df):
          pass
 
 
-def generate_histogram_options(df,df_cleaned):
-    response = messagebox.askyesno("Generate histogram", "Would you like to get the histogram without the outliers?")
-
-    if response:
-        generate_histogram(df_cleaned)
-    else:
-        generate_histogram(df)
-
-
+# _____________________ HISTOGRAM _____________________
 def generate_histogram(df):
     '''
     This function saves a histogram of each variable in the Iris dataset to PNG files.
@@ -174,7 +167,16 @@ def generate_histogram(df):
     else:
          pass
 
+def generate_histogram_options(df,df_cleaned):
+    response = messagebox.askyesno("Generate histogram", "Would you like to get the histogram without the outliers?")
 
+    if response:
+        generate_histogram(df_cleaned)
+    else:
+        generate_histogram(df)
+
+
+# _____________________ PAIRPLOT _____________________
 def generate_pairplot(df):
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
@@ -208,6 +210,7 @@ def generate_pairplot(df):
          pass
 
 
+# _____________________ OUTLIERS _____________________
 def outliers_summary(df):
 
     print(f"Starting {__name__}")
