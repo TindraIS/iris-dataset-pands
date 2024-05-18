@@ -277,6 +277,57 @@ def outliers_summary(df):
     print("\n\t\u2713 Outliers function succesfully finished.")
 
 
+def outliers_cleanup(df):
+    print(f"Starting {__name__}")
+    
+    # Get the list of columns names in the DataFrame
+    variables = df.select_dtypes(include='number').columns
+
+    # Initialise empty array to store indices of outlier rows
+    outlier_indices = []
+
+    # Iterate over unique species values
+    for species in df['species'].unique():
+        
+        # Filter dataframe for the current species
+        df_species = df[df['species'] == species]
+        print(f'\n\tLooping through {species}...')
+
+        for var in variables: 
+            # Calculate the upper and lower limits
+            Q1 = df_species[var].quantile(0.25)  # The 1st quartile is the value below which 25% of the data can be found
+            Q3 = df_species[var].quantile(0.75)  # The 3rd quartile is the value below which 75% of the data falls
+
+            # Calculate the IQR, which measures the middle 50% of the data
+            IQR = Q3 - Q1
+
+            # Calculate the outlier thresholds as per the above formulas
+            # Any data point below/above these values are considered outliers
+            lower = Q1 - 1.5 * IQR
+            upper = Q3 + 1.5 * IQR
+            
+            # Use Numpy's where function to get [indices] of upper/lower outliers & combined them
+            upper_outliers = np.where(df_species[var] >= upper)[0]
+            lower_outliers = np.where(df_species[var] <= lower)[0]
+            all_outliers = np.concatenate((upper_outliers, lower_outliers))
+            
+            # Collect all indices by mapping local indices in df_species back to the global indices in the original df 
+            # with iloc
+            # https://www.geeksforgeeks.org/python-extracting-rows-using-pandas-iloc/
+            global_outliers = df_species.iloc[all_outliers].index
+            
+            # Collect global outlier indices with extend() method to add multiple elements to a list
+            # Tried appending but it didn't work as it would add the entire list as a single element, 
+            # instead of adding each element of the provided iterable to the list individually
+            # https://www.geeksforgeeks.org/append-extend-python/
+            outlier_indices.extend(global_outliers)
+    
+    # Drop outliers from the original df
+    df = df.drop(index=outlier_indices, inplace=True)
+    
+    return df
+        
+
 def opening_menu(username, df, descriptive_summary, generate_histogram, generate_pairplot):
 
     # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
@@ -310,36 +361,42 @@ def opening_menu(username, df, descriptive_summary, generate_histogram, generate
     # https://stackoverflow.com/questions/70406400/understanding-python-lambda-behavior-with-tkinter-button
     # https://tk-tutorial.readthedocs.io/en/latest/button/button.html
     # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/button.html
+
+    # Button 1--------------------------------------------------------------------
+
     button1 = tk.Button(root, text=" .get descriptive summary", height=1, width=25,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="LightSteelBlue4", fg="white")
     button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
     button1['font'] = font_buttons
 
+    # Button 2 --------------------------------------------------------------------
+
     button2 = tk.Button(root, text=" .generate histogram", height=1, width=25,  anchor="w", justify="left", command=lambda: generate_histogram(df), bg="LightSteelBlue4", fg="white")
     button2.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
+
+    # Button 3 --------------------------------------------------------------------
 
     button3 = tk.Button(root, text=" .generate pair scatter plot", height=1, width=25, anchor="w", justify="left", command=lambda: generate_pairplot(df), bg="LightSteelBlue4", fg="white")
     button3.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
 
     
-    # --------------------------------------------------------------------
-    # Create the list of options 
+    # Button 4 --------------------------------------------------------------------
+    # Create the list of options & a dictionary mapping options to their respective functions
     options_list = ["get an outlier summary", "remove outliers"] 
-
-    # Create a dictionary mapping options to their respective functions
     option_functions = {
     "get an outlier summary": outliers_summary,
     "remove outliers": generate_pairplot
     }
     
-    # Variable to keep track of the option selected in OptionMenu & set the default value of the variable
+    # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
     value_inside = tk.StringVar(root," .identify & handle outliers") 
     
     # Create the optionmenu widget and passing the options_list and value_inside to it 
     # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
     button4 = tk.OptionMenu(root, value_inside, *options_list) 
     button4['font'] = font_buttons
+    button4.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
 
     # Se the background color of Options Menu & displayed options
     button4.config(bg="LightSteelBlue4", fg="white", height=1, width=20, anchor="w", justify="left")
@@ -348,8 +405,6 @@ def opening_menu(username, df, descriptive_summary, generate_histogram, generate
     # Configure the OptionMenu to call the appropriate function when an option is selected
     for option in options_list:
         button4["menu"].entryconfig(option, command=lambda opt=option: option_functions[opt](df))
-
-    button4.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
 
     # Maximize the window
     root.state('zoomed')
