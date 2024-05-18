@@ -325,18 +325,19 @@ def outliers_cleanup(df):
     # Drop outliers from the original df
     df = df.drop(index=outlier_indices)
 
-    # 
-    # Display message box with "OK" and "Cancel" buttons
-    response = messagebox.askokcancel("Remove outliers from the dataset ", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
-
-    # Specify folder in which PNG should be saved
+    # Save the cleaned df as .csv file & specify folder in which PNG should be saved
     folder = 'results'
     file_name = 'df_cleaned.csv'
     file_path = os.path.join(os.getcwd(), folder, file_name)
-    
+    df.to_csv(file_path,index=True)
+
+    # 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Remove outliers from the dataset ", "A csv. file containing the cleaned dataset has been created. Please click OK to open the file.")
+
     # If response is True save the df as a .csv, otherwise do nothing
     if response:
-        df.to_csv(file_path,index=True)
+        os.startfile(file_path)
     else:
          pass
     
