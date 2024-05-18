@@ -118,7 +118,7 @@ def descriptive_summary(df):
         print(f"\tUser closed pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-    print("\n\t\u2713 Descriptive summary function succesfully finished.")
+    print("\n\t\u2713 Descriptive summary function successfully finished.")
 
 # _____________________ OUTLIERS _____________________
 def outliers_summary(df):
@@ -132,9 +132,11 @@ def outliers_summary(df):
 
     # Iterate over unique species values
     for species in df['species'].unique():
+
         # Filter dataframe for the current species
         df_species = df[df['species'] == species]
         print(f'\n\tLooping through {species}...')
+        
         outlier_summary.append(f'\n>>> Outlier summary for {species} <<<\n')
 
         lower_array_agg = []
@@ -197,7 +199,7 @@ def outliers_summary(df):
          pass
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-    print("\n\t\u2713 Outliers summary function succesfully finished.")
+    print("\n\t\u2713 Outliers summary function successfully finished.")
 
 def outliers_cleanup(df):
     print(f"Starting {__name__}/outliers_cleanup()")
@@ -251,7 +253,7 @@ def outliers_cleanup(df):
     folder = 'results'
     file_name = 'df_cleaned.csv'
     file_path = os.path.join(os.getcwd(), folder, file_name)
-    df.to_csv(file_path,index=True)
+    df.to_csv(file_path,index=False)
 
     # 
     # Display message box with "OK" and "Cancel" buttons
@@ -264,7 +266,7 @@ def outliers_cleanup(df):
          pass
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-    print("\n\t\u2713 Outliers cleanup function succesfully finished.")
+    print("\n\t\u2713 Outliers cleanup function successfully finished.")
 
     return df
         
@@ -274,7 +276,8 @@ def generate_histogram(df):
     '''
     This function saves a histogram of each variable in the Iris dataset to PNG files.
     '''
-    print(f"Reading in {df}")
+    print(f"Starting {__name__}/generate_histogram()")
+
     # I. 
     # Get the list of columns names in the DataFrame
     # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
@@ -287,7 +290,7 @@ def generate_histogram(df):
     
     # II.
     # Create subplots
-    fig, axes = plt.subplots(num_rows, num_columns, figsize=(12, 8))
+    fig, axes = plt.subplots(num_rows, num_columns, figsize=(10, 6))
     
     # Plot histograms for each variable
     # https://napsterinblue.github.io/notes/python/viz/subplots/
@@ -297,7 +300,7 @@ def generate_histogram(df):
 
     # Use enumerate() to get both the index and value of each pair
     for index, (col, ax) in enumerate(zip(variables, axes)):
-        ax.hist(df[col], bins=20, color='sandybrown', edgecolor='black')
+        ax.hist(df[col], bins=20, color='darkgreen', edgecolor='black')
         ax.set_title(col)
         ax.set_xlabel('Value')
         ax.set_ylabel('Frequency')
@@ -308,8 +311,8 @@ def generate_histogram(df):
             break
     
     # Adjust layout & set subplot suptitle
+    plt.suptitle("\nDistribution of Variables in the Iris Dataset\n")
     plt.tight_layout()
-    plt.suptitle("Distribution of Variables in the Iris Dataset\n")
 
     # III.
     # Specify folder in which PNG should be saved
@@ -329,6 +332,9 @@ def generate_histogram(df):
         fig.show()
     else:
          pass
+    
+    # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    print("\n\t\u2713 Histogram function successfully finished.")
 
 def generate_histogram_options(df,df_cleaned):
     response = messagebox.askyesno("Generate histogram", "Would you like to generate the histogram without the outliers?")
@@ -350,8 +356,8 @@ def generate_pairplot(df):
     sns.pairplot(df, hue="species", corner=True, kind="reg", plot_kws={'line_kws':{'color':'black'}})
 
     # Adjust layout & set subplot suptitle
-    plt.tight_layout()
     plt.suptitle("Attribute Pairs by Species", fontsize=16)
+    plt.tight_layout()
 
     # II.
     # Specify folder in which PNG should be saved

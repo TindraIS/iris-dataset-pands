@@ -14,7 +14,7 @@ import menu
 
 # Wrap code in a try-except statement to handle errors in case arguments are not provided in the cmd line
 '''
-Initialise the ArgumentParser object, will allows for cmd line arguments to be defined.
+Initialise the ArgumentParser object, which allows for cmd line arguments to be defined.
 Customise thethe parser by:
     (1) specifying the program name that will be used in the usage message;
     (2) defining a general description for the program and a closing message.
@@ -25,7 +25,7 @@ Define optional arguments for the filename and the Wikipedia's query with the fo
     (1) Set long and short form flags;
     (2) Set required to false so that the program don't throw an error if no arguments are provided in the cmd line, 
         but rather handle the error in the below try-except statement;
-    (3) Set metavar to empty to clean up the -h message by not showing the uppercase dest values (FILENAME and QUERY);
+    (3) Set metavar to empty to clean up the -h message by not showing the uppercase dest values (USERNAME);
     (4) Set the helper with a brief description of what the argument does.
 '''
 
