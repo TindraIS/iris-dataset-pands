@@ -331,7 +331,7 @@ def outliers_cleanup(df):
 
     # Specify folder in which PNG should be saved
     folder = 'results'
-    file_name = 'df_cleaned'
+    file_name = 'df_cleaned.csv'
     file_path = os.path.join(os.getcwd(), folder, file_name)
     
     # If response is True save the df as a .csv, otherwise do nothing
@@ -343,7 +343,6 @@ def outliers_cleanup(df):
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Outliers cleanup function succesfully finished.")
 
-    
     return df
         
 
@@ -402,10 +401,10 @@ def opening_menu(username, df):
     
     # Button 4 --------------------------------------------------------------------
     # Create the list of options & a dictionary mapping options to their respective functions
-    options_list = ["Get a summary of outliers", "Remove outliers from the Dataset"] 
+    options_list = ["Get a summary of outliers", "Remove outliers from the dataset"] 
     option_functions = {
-    "get an outlier summary": outliers_summary,
-    "remove outliers": outliers_cleanup
+    "Get a summary of outliers": outliers_summary,
+    "Remove outliers from the dataset": outliers_cleanup
     }
     
     # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
