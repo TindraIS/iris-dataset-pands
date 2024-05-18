@@ -365,7 +365,7 @@ def opening_menu(username, df, df_cleaned):
     root.title("PETALIST || Iris Dataset Analysis")
 
     # Load image
-    image = tk.PhotoImage(file="C:/Users/ifs/OneDrive/Documents/ATU/Programming & Scripting/pands-project/images/menu_background.png")
+    image = tk.PhotoImage(file="C:/Users/ifs/OneDrive/Documents/ATU/Programming & Scripting/pands-project/images/menu_background_.png")
     image = image.subsample(2, 2)  # Resize by a factor of 2 in both dimensions
 
     # Create a label to display the image
@@ -375,15 +375,15 @@ def opening_menu(username, df, df_cleaned):
     # Create Font object
     # https://pythonexamples.org/python-tkinter-button-change-font/
     # https://www.geeksforgeeks.org/tkinter-fonts/
-    font_buttons = font.Font(family='Agency FB', size=10, weight="bold")
-    font_label_heading = font.Font(family='Agency FB', size=26, weight="bold")
-    font_label_text = font.Font(family='Agency FB', size=14)
+    font_buttons = font.Font(family='Sitka Small', size=8, weight="bold")
+    font_label_heading = font.Font(family='Sitka Small', size=26, weight="bold")
+    font_label_text = font.Font(family='Sitka Small', size=10)
 
     # Create labels for text
-    label1 = tk.Label(root, fg="gray9", bg="white", text=f"Hello {username},", font=font_label_heading)
-    label1.place(relx=0.54, rely=0.2, anchor="sw")
-    label2 = tk.Label(root, fg="gray9", bg="white", text="\nWelcome to Petalist, the Iris dataset analysis program.\nPlease select one of the options below:                      .", font=font_label_text)
-    label2.place(relx=0.54, rely=0.3, anchor="sw")
+    label1 = tk.Label(root, fg="#5E7F73", bg="white", text=f"Hello {username},", font=font_label_heading)
+    label1.place(relx=0.50, rely=0.3, anchor="sw")
+    label2 = tk.Label(root, fg="#5E7F73", bg="white", text="Welcome to Petalist, the Iris dataset analysis \nprogram. Please select one of the options below:", font=font_label_text, anchor='w')
+    label2.place(relx=0.50, rely=0.4, anchor="sw")
 
     # Create buttons
     # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
@@ -407,11 +407,11 @@ def opening_menu(username, df, df_cleaned):
     # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
     button1 = tk.OptionMenu(root, value_inside, *options_list) 
     button1['font'] = font_buttons
-    button1.place(relx=0.60, rely=0.4, anchor="center")  # Place button relative to the center of the window
+    button1.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
 
     # Se the background color of Options Menu & displayed options
-    button1.config(bg="LightSteelBlue4", fg="white", height=1, width=20, anchor="w", justify="left")
-    button1["menu"].config(bg="LightSteelBlue3")
+    button1.config(bg="#5E7F73", fg="white", height=1, width=23, anchor="w", justify="left")
+    button1["menu"].config(bg="#7A9F92")
 
     # Configure the OptionMenu to call the appropriate function when an option is selected
     for option in options_list:
@@ -419,21 +419,21 @@ def opening_menu(username, df, df_cleaned):
 
     # Button 2 --------------------------------------------------------------------
 
-    button2 = tk.Button(root, text=" .generate histogram", height=1, width=25,  anchor="w", justify="left", command=lambda: generate_histogram_options(df, df_cleaned), bg="LightSteelBlue4", fg="white")
-    button2.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
+    button2 = tk.Button(root, text=" .generate histogram", height=1, width=30,  anchor="w", justify="left", command=lambda: generate_histogram_options(df, df_cleaned), bg="#5E7F73", fg="white")
+    button2.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
 
     # Button 3 --------------------------------------------------------------------
 
-    button3 = tk.Button(root, text=" .generate pair scatter plot", height=1, width=25, anchor="w", justify="left", command=lambda: generate_pairplot(df), bg="LightSteelBlue4", fg="white")
-    button3.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
+    button3 = tk.Button(root, text=" .generate pair scatter plot", height=1, width=30, anchor="w", justify="left", command=lambda: generate_pairplot(df), bg="#5E7F73", fg="white")
+    button3.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
     button3['font'] = font_buttons
 
     
     # Button 4 --------------------------------------------------------------------
     
-    button4 = tk.Button(root, text=" .get descriptive summary", height=1, width=25,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="LightSteelBlue4", fg="white")
-    button4.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
+    button4 = tk.Button(root, text=" .get descriptive summary", height=1, width=30,  anchor="w", justify="left", command=lambda: descriptive_summary(df), bg="#5E7F73", fg="white")
+    button4.place(relx=0.60, rely=0.8, anchor="center")  # Place button relative to the center of the window
     button4['font'] = font_buttons
 
     # Maximize the window
