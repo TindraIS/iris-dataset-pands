@@ -105,10 +105,20 @@ def descriptive_summary(df):
          pass
 
 
+def generate_histogram_options(df,df_cleaned):
+    response = messagebox.askyesno("Generate histogram", "Would you like to get the histogram without the outliers?")
+
+    if response:
+        generate_histogram(df_cleaned)
+    else:
+        generate_histogram(df)
+
+
 def generate_histogram(df):
     '''
     This function saves a histogram of each variable in the Iris dataset to PNG files.
     '''
+    print(f"Reading in {df}")
     # I. 
     # Get the list of columns names in the DataFrame
     # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
@@ -347,7 +357,7 @@ def outliers_cleanup(df):
     return df
         
 
-def opening_menu(username, df):
+def opening_menu(username, df, df_cleaned):
 
     # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     # Create the main window
@@ -409,7 +419,7 @@ def opening_menu(username, df):
 
     # Button 2 --------------------------------------------------------------------
 
-    button2 = tk.Button(root, text=" .generate histogram", height=1, width=25,  anchor="w", justify="left", command=lambda: generate_histogram(df), bg="LightSteelBlue4", fg="white")
+    button2 = tk.Button(root, text=" .generate histogram", height=1, width=25,  anchor="w", justify="left", command=lambda: generate_histogram_options(df, df_cleaned), bg="LightSteelBlue4", fg="white")
     button2.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
     button2['font'] = font_buttons
 

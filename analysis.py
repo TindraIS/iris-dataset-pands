@@ -6,6 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import tools
+import os
 
 
 # ---------------------------------- MAIN CODE ---------------------------------- #
@@ -38,7 +39,13 @@ try:
     # Declare variables 
     USERNAME = args.username    # Assign the filename provided in the cmd line to FILENAME using the dot notation on args
     df = tools.get_dataset()
-    tools.opening_menu(USERNAME, df)
+
+    folder = 'results'
+    file_name = 'df_cleaned.csv'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+    df_cleaned = pd.read_csv(file_path)
+    
+    tools.opening_menu(USERNAME, df, df_cleaned)
     
 except: 
     # Print a help message, including the program usage and information about the arguments defined with the ArgumentParser
