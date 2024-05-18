@@ -106,110 +106,6 @@ def descriptive_summary(df):
          pass
 
 
-# _____________________ HISTOGRAM _____________________
-def generate_histogram(df):
-    '''
-    This function saves a histogram of each variable in the Iris dataset to PNG files.
-    '''
-    print(f"Reading in {df}")
-    # I. 
-    # Get the list of columns names in the DataFrame
-    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
-    variables = df.select_dtypes(include='number').columns
-    
-    # Dynamically calculate the number of rows and columns for the subplots
-    num_variables = len(variables)       # Check how many variables the dataset contains
-    num_rows = (num_variables + 1) // 2  # Ensure there are at least 2 plots per row
-    num_columns = 2                    # Create 2 columns
-    
-    # II.
-    # Create subplots
-    fig, axes = plt.subplots(num_rows, num_columns, figsize=(12, 8))
-    
-    # Plot histograms for each variable
-    # https://napsterinblue.github.io/notes/python/viz/subplots/
-    # https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
-    # Flatten the axes array
-    axes = axes.flatten()           
-
-    # Use enumerate() to get both the index and value of each pair
-    for index, (col, ax) in enumerate(zip(variables, axes)):
-        ax.hist(df[col], bins=20, color='sandybrown', edgecolor='black')
-        ax.set_title(col)
-        ax.set_xlabel('Value')
-        ax.set_ylabel('Frequency')
-        
-        # Cleanup the remainder unused subplots
-        if index + 1 >= num_variables:
-            [ax.set_visible(False) for ax in axes.flatten()[index+1:]]
-            break
-    
-    # Adjust layout & set subplot suptitle
-    plt.tight_layout()
-    plt.suptitle("Distribution of Variables in the Iris Dataset\n")
-
-    # III.
-    # Specify folder in which PNG should be saved
-    folder = 'results'
-    file_name = 'histograms.png'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
-
-    # Save plot
-    fig.savefig(fname=file_path)      
-
-    # IV. 
-    # Display message box with "OK" and "Cancel" buttons
-    response = messagebox.askokcancel("Generate histograms", "A histogram of each variable will be plotted and saved in the results directory. Please click OK to open the file.")
-
-    # If response is True open the file, otherwise do nothing
-    if response:
-        fig.show()
-    else:
-         pass
-
-def generate_histogram_options(df,df_cleaned):
-    response = messagebox.askyesno("Generate histogram", "Would you like to get the histogram without the outliers?")
-
-    if response:
-        generate_histogram(df_cleaned)
-    else:
-        generate_histogram(df)
-
-
-# _____________________ PAIRPLOT _____________________
-def generate_pairplot(df):
-    '''
-    This function outputs a scatter plot of each pair of variables of the Iris dataset.
-    '''
-    # I.
-    # Plot a pairplot to analyse the interaction between the different variables
-    # https://python-charts.com/correlation/pairs-plot-seaborn/
-    sns.pairplot(df, hue="species", corner=True, kind="reg", plot_kws={'line_kws':{'color':'black'}})
-
-    # Adjust layout & set subplot suptitle
-    plt.tight_layout()
-    plt.suptitle("Attribute Pairs by Species", fontsize=16)
-
-    # II.
-    # Specify folder in which PNG should be saved
-    folder = 'results'
-    file_name = 'pairplot.png'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
-
-    # Save plot
-    plt.savefig(fname=file_path)      
-
-    # III. 
-    # Display message box with "OK" and "Cancel" buttons
-    response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
-
-    # If response is True open the file, otherwise do nothing
-    if response:
-        plt.show()
-    else:
-         pass
-
-
 # _____________________ OUTLIERS _____________________
 def outliers_summary(df):
 
@@ -289,7 +185,6 @@ def outliers_summary(df):
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Outliers summary function succesfully finished.")
 
-
 def outliers_cleanup(df):
     print(f"Starting {__name__}")
     
@@ -359,3 +254,115 @@ def outliers_cleanup(df):
 
     return df
         
+
+# _____________________ HISTOGRAM _____________________
+def generate_histogram(df):
+    '''
+    This function saves a histogram of each variable in the Iris dataset to PNG files.
+    '''
+    print(f"Reading in {df}")
+    # I. 
+    # Get the list of columns names in the DataFrame
+    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
+    variables = df.select_dtypes(include='number').columns
+    
+    # Dynamically calculate the number of rows and columns for the subplots
+    num_variables = len(variables)       # Check how many variables the dataset contains
+    num_rows = (num_variables + 1) // 2  # Ensure there are at least 2 plots per row
+    num_columns = 2                    # Create 2 columns
+    
+    # II.
+    # Create subplots
+    fig, axes = plt.subplots(num_rows, num_columns, figsize=(12, 8))
+    
+    # Plot histograms for each variable
+    # https://napsterinblue.github.io/notes/python/viz/subplots/
+    # https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
+    # Flatten the axes array
+    axes = axes.flatten()           
+
+    # Use enumerate() to get both the index and value of each pair
+    for index, (col, ax) in enumerate(zip(variables, axes)):
+        ax.hist(df[col], bins=20, color='sandybrown', edgecolor='black')
+        ax.set_title(col)
+        ax.set_xlabel('Value')
+        ax.set_ylabel('Frequency')
+        
+        # Cleanup the remainder unused subplots
+        if index + 1 >= num_variables:
+            [ax.set_visible(False) for ax in axes.flatten()[index+1:]]
+            break
+    
+    # Adjust layout & set subplot suptitle
+    plt.tight_layout()
+    plt.suptitle("Distribution of Variables in the Iris Dataset\n")
+
+    # III.
+    # Specify folder in which PNG should be saved
+    folder = 'results'
+    file_name = 'histograms.png'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+
+    # Save plot
+    fig.savefig(fname=file_path)      
+
+    # IV. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Generate histograms", "A histogram of each variable will be plotted and saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    if response:
+        fig.show()
+    else:
+         pass
+
+def generate_histogram_options(df,df_cleaned):
+    response = messagebox.askyesno("Generate histogram", "Would you like to generate the histogram without the outliers?")
+
+    if response:
+        generate_histogram(df_cleaned)
+    else:
+        generate_histogram(df)
+
+
+# _____________________ PAIRPLOT _____________________
+def generate_pairplot(df):
+    '''
+    This function outputs a scatter plot of each pair of variables of the Iris dataset.
+    '''
+    # I.
+    # Plot a pairplot to analyse the interaction between the different variables
+    # https://python-charts.com/correlation/pairs-plot-seaborn/
+    sns.pairplot(df, hue="species", corner=True, kind="reg", plot_kws={'line_kws':{'color':'black'}})
+
+    # Adjust layout & set subplot suptitle
+    plt.tight_layout()
+    plt.suptitle("Attribute Pairs by Species", fontsize=16)
+
+    # II.
+    # Specify folder in which PNG should be saved
+    folder = 'results'
+    file_name = 'pairplot.png'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+
+    # Save plot
+    plt.savefig(fname=file_path)      
+
+    # III. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    if response:
+        plt.show()
+    else:
+         pass
+
+def generate_pairplot_options(df,df_cleaned):
+    response = messagebox.askyesno("Generate pair plot", "Would you like to generate the histogram without the outliers?")
+
+    if response:
+        generate_pairplot(df_cleaned)
+    else:
+        generate_pairplot(df)
+
