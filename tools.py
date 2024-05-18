@@ -323,7 +323,7 @@ def outliers_cleanup(df):
             outlier_indices.extend(global_outliers)
     
     # Drop outliers from the original df
-    df = df.drop(index=outlier_indices, inplace=True)
+    df = df.drop(index=outlier_indices)
 
     # 
     # Display message box with "OK" and "Cancel" buttons
