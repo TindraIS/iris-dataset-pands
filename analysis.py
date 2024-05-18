@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import tools
 import os
+import menu
 
 
 # ---------------------------------- MAIN CODE ---------------------------------- #
@@ -45,7 +46,7 @@ try:
     file_path = os.path.join(os.getcwd(), folder, file_name)
     df_cleaned = pd.read_csv(file_path)
     
-    tools.opening_menu(USERNAME, df, df_cleaned)
+    menu.opening_menu(USERNAME, df, df_cleaned)
     
 except: 
     # Print a help message, including the program usage and information about the arguments defined with the ArgumentParser
