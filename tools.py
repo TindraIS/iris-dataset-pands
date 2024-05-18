@@ -274,7 +274,7 @@ def outliers_summary(df):
          pass
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-    print("\n\t\u2713 Outliers function succesfully finished.")
+    print("\n\t\u2713 Outliers summary function succesfully finished.")
 
 
 def outliers_cleanup(df):
@@ -324,6 +324,25 @@ def outliers_cleanup(df):
     
     # Drop outliers from the original df
     df = df.drop(index=outlier_indices, inplace=True)
+
+    # 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Remove outliers from the dataset ", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
+
+    # Specify folder in which PNG should be saved
+    folder = 'results'
+    file_name = 'df_cleaned'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+    
+    # If response is True save the df as a .csv, otherwise do nothing
+    if response:
+        df.to_csv(file_path,index=True)
+    else:
+         pass
+    
+    # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    print("\n\t\u2713 Outliers cleanup function succesfully finished.")
+
     
     return df
         
@@ -383,10 +402,10 @@ def opening_menu(username, df):
     
     # Button 4 --------------------------------------------------------------------
     # Create the list of options & a dictionary mapping options to their respective functions
-    options_list = ["get an outlier summary", "remove outliers"] 
+    options_list = ["Get a summary of outliers", "Remove outliers from the Dataset"] 
     option_functions = {
     "get an outlier summary": outliers_summary,
-    "remove outliers": generate_pairplot
+    "remove outliers": outliers_cleanup
     }
     
     # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
