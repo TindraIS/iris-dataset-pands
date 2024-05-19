@@ -266,7 +266,7 @@ def outliers_summary(df):
 
     # VI. 
     # Display message box with "OK" and "Cancel" buttons
-    response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
+    response = messagebox.askokcancel("Outlier summary", "A text file with an outlier summary by species will be saved in the results directory. Please click OK to open the file")
 
     # If response is True open the file, otherwise do nothing
     if response:
@@ -343,7 +343,7 @@ def outliers_cleanup(df):
    
     # IV.
     # Display message box with "OK" and "Cancel" buttons
-    response = messagebox.askokcancel("Outliers summary", "A text file with an outlier summary by species will be saved in the results directory. Please click OK to open the file.")
+    response = messagebox.askokcancel("Outliers cleanup", "A CSV file containing the Iris dataset without outliers will be saved in the results directory. Please click OK to open the file.")
 
     # If response is True open the csv, otherwise do nothing
     if response:
@@ -414,7 +414,7 @@ def generate_histogram(df):
             break
     
     # Adjust layout & set subplot suptitle
-    plt.suptitle("\nDistribution of Variables in the Iris Dataset\n")
+    plt.suptitle("\nDistribution of Variables in the Iris Dataset\n",fontsize=14)
     plt.tight_layout()
 
     # III.
