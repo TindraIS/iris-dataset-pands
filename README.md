@@ -14,11 +14,13 @@ The Iris flower dataset was created by the British statistician and biologist Ro
 
 ### Program Inspiration
 
-I wanted to create a user-centric program, where several analysis options where presented. At first, I thought about creating all the options through `argparse`, but upon further research I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. From there, I read the documentation and just started building on top of it. 
+I wanted to create a user-centric program that presents several analysis options. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
 
-After adding the outliers function, I had to think of a way of asking the user if the analysis should be done with or without the outliers, otherwise it wouldn't make much sense to keep it if the plots didn't take the cleaned DataFrame as the data source. As a result, I added the _functionName_ options functions and amended the `opening_menu()`parameters.
+In terms of the concepts used, I incorporated what was shown in the lectures as well as some functions and modules from the weekly tasks: command-line arguments, creating text files, saving files, reading CSVs, try-except blocks, if statements, for loops, etc.
 
-Should I had more time and less kids (_joking_), I would have created more analysis options, such as correlation analysis, or linear regression.
+After adding the outliers function, I needed a way to ask the user if the analysis should be done with or without the outliers. It wouldn't make much sense to keep it if the plots didn't use the cleaned DataFrame as the data source. As a result, I added the function options and amended the opening_menu() parameters.
+
+Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
 
 ## Contents
 
