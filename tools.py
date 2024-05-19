@@ -59,9 +59,11 @@ def get_dataset():
     # Return the DataFrame object
     return df
 
-    if __name__ == __main__:
-        pass
-
+# Create a test for the get_dataset() to verify its functionality, intended to run exclusively within tools.py 
+# and not when the script is imported into analysis.py as a module
+if __name__ == "__main__":
+    iris_dataset = get_dataset()
+    print("Iris dataset loaded successfully!")    
 
 
 # _____________________ TXT SUMMARY _____________________
