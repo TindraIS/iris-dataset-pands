@@ -13,7 +13,7 @@ I. As showed in one of the lectures, use the logging module to record the error 
     - Open the log file in append mode, so that previous data doesn't get overriden.
     - Format of the error messages with the time it occured, error level and error message.
 
-II. Wrap code in a try-except statement to handle errors in case arguments are not provided in the cmd line
+II. Wrap code in a try-except statement to handle errors in case arguments are not provided in the cmd line or any other error occurs.
 
 III. Initialise the ArgumentParser object, which allows for cmd line arguments to be defined.
     Customise the parser by:
