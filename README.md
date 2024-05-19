@@ -15,6 +15,7 @@ When running `analysis.py`, __the program entry point__, the `menu.py` module is
     - Remove outliers from the dataset
 - Generate pair scatter plots
 - Generate histograms
+- Compute PCA
 
 When one of the options is selected, the corresponding function is called back in `tools.py` and the output is saved in the /results directory.
 
@@ -33,7 +34,7 @@ After adding the outliers function, I needed a way to ask the user if the analys
 
 Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
 
-### Comments
+### Commentary 
 
 The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
 
@@ -51,6 +52,7 @@ pands-project/
 │   └── II.outliers_summary.txt      # Output of tools.outliers_summary(df)
 │   └── III.pairplot.png             # Output of tools.generate_pairplot(df) & assigment mandatory task
 │   └── IV.histograms.png            # Output of tools.generate_histogram(df) & assigment mandatory task
+│   └── V.PCA.png                    # Output of tools.perform_PCA(df)
 ├── analysis.py                      # Program entry point
 ├── error.log                        # File capturing info on errors that occur in analysis.py
 ├── menu.py                          # Module containing the function that computes the GUI with tkinter when analysis.py is run
@@ -72,6 +74,7 @@ pands-project/
     - OS
     - Logging
     - Argparse
+    - Scikit-learn
 * Any IDE of personal choice to run the notebook in a local environment. The author used Visual Studio Code in the development. 
 
 ## Get Help
