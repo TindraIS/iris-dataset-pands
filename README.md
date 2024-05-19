@@ -14,11 +14,12 @@ The Iris flower dataset was created by the British statistician and biologist Ro
 
 ### Program Inspiration
 
-I wanted to create a user-centric program that presents several analysis options. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
+I wanted to create a user-centric program that presents several analysis options, ensuring a scripting oriented-project opposed to what I had done for the other module, which was done on a Jupyter Notebook. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
 
-In terms of the concepts used, I incorporated what was shown in the lectures as well as some functions and modules from the weekly tasks: command-line arguments, creating text files, saving files, reading CSVs, try-except blocks, if statements, for loops, etc.
+In terms of the concepts used, I incorporated what was shown in the lectures as well as some functions and modules from the weekly tasks: command-line arguments, creating text files, saving files, reading CSVs, try-except blocks, if statements, for loops, etc. Step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. 
 
 After adding the outliers function, I needed a way to ask the user if the analysis should be done with or without the outliers. It wouldn't make much sense to keep it if the plots didn't use the cleaned DataFrame as the data source. As a result, I added the function options and amended the opening_menu() parameters.
+
 
 Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
 
@@ -34,8 +35,8 @@ pands-project/
 │   ├── I.variables_summary.txt      # Output of tools.descriptive_summary(df)
 │   ├── II.dataframe_cleaned.csv     # Output of tools.outliers_cleanup(df)
 │   └── II.outliers_summary.txt      # Output of tools.outliers_summary(df)
-│   └── III.pairplot.png             # Output of tools.generate_pairplot(df)
-│   └── IV.histograms.png            # Output of tools.generate_histogram(df)
+│   └── III.pairplot.png             # Output of tools.generate_pairplot(df) & assigment mandatory task
+│   └── IV.histograms.png            # Output of tools.generate_histogram(df) & assigment mandatory task
 ├── analysis.py                      # Program entry point
 ├── error.log                        # File capturing info on errors that occur in analysis.py
 ├── menu.py                          # Module containing the function that computes the GUI with tkinter when analysis.py is run
