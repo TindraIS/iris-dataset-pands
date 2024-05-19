@@ -59,7 +59,7 @@ def opening_menu(username, df, df_cleaned):
     # Button 1--------------------------------------------------------------------
 
     button1 = tk.Button(root, 
-                        text=" .get descriptive summary", 
+                        text=" I .get descriptive summary", 
                         command=lambda: tools.descriptive_summary(df),
                         width=button_width, 
                         height=button_height, 
@@ -81,7 +81,7 @@ def opening_menu(username, df, df_cleaned):
         }
     
     # Variable to keep track of the option selected in tk.OptionMenu() & set the default value of the variable
-    value_inside = tk.StringVar(root," .identify & handle outliers") 
+    value_inside = tk.StringVar(root,"II .identify & handle outliers") 
     
     # Create the optionmenu widget and passing the options_list and value_inside to it 
     # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
@@ -105,8 +105,8 @@ def opening_menu(username, df, df_cleaned):
     # Button 3 --------------------------------------------------------------------
 
     button3 = tk.Button(root, 
-                        text=" .generate pair scatter plot", 
-                        command=lambda: tools.generate_pairplot(df),
+                        text="III .generate pair scatter plot", 
+                        command=lambda: tools.generate_pairplot_options(df,df_cleaned),
                         width=button_width, 
                         height=button_height, 
                         anchor=button_anchor, 
@@ -120,7 +120,7 @@ def opening_menu(username, df, df_cleaned):
     # Button 4 --------------------------------------------------------------------
     
     button4 = tk.Button(root, 
-                        text=" .generate histogram",  
+                        text="IV .generate histogram",  
                         command=lambda: tools.generate_histogram_options(df, df_cleaned),
                         width=button_width, 
                         height=button_height, 

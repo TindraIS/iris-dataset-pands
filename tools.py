@@ -70,7 +70,6 @@ def descriptive_summary(df):
     
     print(f'\n\tOverall summary computed.')
 
-
     # II.
     summary += f"(3) Summary for Each Species:\n\n"
 
@@ -98,7 +97,7 @@ def descriptive_summary(df):
     # III.
     # Specify folder in which txt should be saved
     folder = 'results'
-    file_name = 'summary.txt'
+    file_name = 'I.variables_summary.txt'
     file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Save summary in a txt file
@@ -113,9 +112,9 @@ def descriptive_summary(df):
     # If response is True open the file, otherwise do nothing
     if response:
         os.startfile(file_path)
-        print(f"\tUser opened file.")
+        print(f"\tUser opened the file.")
     else:
-        print(f"\tUser closed pop-up.")
+        print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Descriptive summary function successfully finished.")
@@ -179,7 +178,7 @@ def outliers_summary(df):
     # III.
     # Specify folder in which txt should be saved
     folder = 'results'
-    file_name = 'outliers_summary.txt'
+    file_name = 'II.outliers_summary.txt'
     file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Write the collected outlier information to a text file
@@ -251,10 +250,10 @@ def outliers_cleanup(df):
 
     # Save the cleaned df as .csv file & specify folder in which PNG should be saved
     folder = 'results'
-    file_name = 'df_cleaned.csv'
+    file_name = 'II.dataframe_cleaned.csv'
     file_path = os.path.join(os.getcwd(), folder, file_name)
     df.to_csv(file_path,index=False)
-
+    print("\tNew df saved as a .csv file.")
     # 
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Outliers summary", "A text file with an outlier summary by species will be saved in the results directory. Please click OK to open the file.")
@@ -262,8 +261,9 @@ def outliers_cleanup(df):
     # If response is True save the df as a .csv, otherwise do nothing
     if response:
         os.startfile(file_path)
+        print(f"\tUser opened the file.")
     else:
-         pass
+        print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Outliers cleanup function successfully finished.")
@@ -286,7 +286,7 @@ def generate_histogram(df):
     # Dynamically calculate the number of rows and columns for the subplots
     num_variables = len(variables)       # Check how many variables the dataset contains
     num_rows = (num_variables + 1) // 2  # Ensure there are at least 2 plots per row
-    num_columns = 2                    # Create 2 columns
+    num_columns = 2                      # Create 2 columns
     
     # II.
     # Create subplots
@@ -317,7 +317,7 @@ def generate_histogram(df):
     # III.
     # Specify folder in which PNG should be saved
     folder = 'results'
-    file_name = 'histograms.png'
+    file_name = 'IV.histograms.png'
     file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Save plot
@@ -362,7 +362,7 @@ def generate_pairplot(df):
     # II.
     # Specify folder in which PNG should be saved
     folder = 'results'
-    file_name = 'pairplot.png'
+    file_name = 'III.pairplot.png'
     file_path = os.path.join(os.getcwd(), folder, file_name)
 
     # Save plot
@@ -375,8 +375,9 @@ def generate_pairplot(df):
     # If response is True open the file, otherwise do nothing
     if response:
         plt.show()
+        print(f"\tUser opened the plot.")
     else:
-         pass
+        print(f"\tUser closed the pop-up.")
 
 def generate_pairplot_options(df,df_cleaned):
     response = messagebox.askyesno("Generate pair plot", "Would you like to generate the histogram without the outliers?")
