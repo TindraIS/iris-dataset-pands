@@ -109,6 +109,7 @@ def descriptive_summary(df):
     counter = 0
 
     # Iterate over each species and generate summary statistics
+    # Given we are dealing with strings the '+' sign will append the text to summary variable in each iteration
     for species, group_df in df_species:
         counter += 1
         summary += f"3.{counter} Summary for {species}\n"
@@ -293,7 +294,7 @@ def outliers_cleanup(df):
     # Initialise empty array to store indices of outlier rows
     outlier_indices = []
 
-    # Iterate over unique species values
+    # Iterate over unique species in the DataFrame
     for species in df['species'].unique():
         
         # Filter dataframe for the current species
@@ -326,7 +327,7 @@ def outliers_cleanup(df):
             
             # Collect global outlier indices with extend() method to add multiple elements to a list
             # Tried appending but it didn't work as it would add the entire list as a single element, 
-            # instead of adding each element of the provided iterable to the list individually
+            # instead of adding each element of variable being looped to the list individually
             # https://www.geeksforgeeks.org/append-extend-python/
             outlier_indices.extend(global_outliers)
     
@@ -345,7 +346,7 @@ def outliers_cleanup(df):
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Outliers cleanup", "A CSV file containing the Iris dataset without outliers will be saved in the results directory. Please click OK to open the file.")
 
-    # If response is True open the csv, otherwise do nothing
+    # If response is True open the CSV, otherwise do nothing
     if response:
         os.startfile(file_path)
         print(f"\tUser opened the file.")
