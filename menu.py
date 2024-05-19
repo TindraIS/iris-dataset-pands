@@ -1,3 +1,12 @@
+'''
+Name: menu.py
+
+Author: Irina Simoes
+
+Description: This file contains a module with the function that computes the GUI with tkinter when analysis.py is run.
+
+'''
+
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.font as font

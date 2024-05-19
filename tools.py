@@ -281,7 +281,7 @@ def outliers_summary(df):
 
 def outliers_cleanup(df):
     '''
-    Using the same logic as outliers_summary(df), this function computes a summary of outliers present in the Iris dataset by species
+    Using the same logic as outliers_summary(df), this function computes a summary of outliers present in the Iris dataset by species.
     '''
 
     # I.
