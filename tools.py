@@ -196,7 +196,7 @@ def outliers_summary(df):
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
     
-    VI. After running the analysis, ask the user if they want to proceed with generating a scatter plot and viewing the results.
+    VI. After running the analysis, ask the user if they want to proceed with opening the txt file and viewing the results.
         If the user clicks OK, the generated file is opened using os.startfile.
         If the user clicks Cancel, the program does nothing apart from printing a debugging message.
         https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
@@ -465,9 +465,11 @@ def generate_histogram_options(df,df_cleaned):
 
 # _____________________ PAIRPLOT _____________________
 def generate_pairplot(df):
+
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
     '''
+
     # I.
     # Plot a pairplot to analyse the interaction between the different variables
     # https://python-charts.com/correlation/pairs-plot-seaborn/
@@ -513,30 +515,58 @@ def generate_pairplot_options(df,df_cleaned):
         generate_pairplot(df)
 
 
-# _____________________ PAIRPLOT _____________________
+# _____________________ PCA _____________________
 def perform_PCA(df):
-    # https://www.turing.com/kb/guide-to-principal-component-analysis
-    # https://towardsdatascience.com/a-step-by-step-introduction-to-pca-c0d78e26a0dd
 
-    # Standardise the range of variables to analyse the contribution of each variable equally. This calculation
-    # categorises the variables that are dominating the other variables of small ranges, preventing a biased result. 
-    # The goal is to mimic a normal distribution by having a mean of 0 and a standard deviation of 1.
-    # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+    '''
+    This function computes a PCA and reduces the 4-dimensional Iris dataset to 2 dimensions/features, outputing 
+    a scatter plot of the principal components making it easier to understand how are species distributed.
+    https://www.turing.com/kb/guide-to-principal-component-analysis
+    https://towardsdatascience.com/a-step-by-step-introduction-to-pca-c0d78e26a0dd
+    https://builtin.com/machine-learning/pca-in-python
+    https://saturncloud.io/blog/what-is-sklearn-pca-explained-variance-and-explained-variance-ratio-difference
+    
+    I. Standardise the range of variables to analyse the contribution of each variable equally. This calculation
+       categorises the variables that are dominating the other variables of small ranges, preventing a biased result. 
+       The goal is to mimic a normal distribution by having a mean of 0 and a standard deviation of 1.
+       https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+
+    II. Compute the PCA, reducing the dataset to 2 components/variables
+
+    III. Create new DataFrame with the variables created by sklearn when computing the PCA, concatenating it along the columns 
+         with the original df containing only the species column. Since both DataFrames have same number of rows and are concatenated 
+         along the columns, the original df filtered for species is added as a new column to pca_df. Therefore, this concat aligns 
+         the species datapoints with the respective PCA based on the index.
+
+    IV. Compute a scatter plot to visualise the PCA with a for loop through each species in the DataFrame, applying the same logic as 
+        in generate_histogram() function.
+
+    V.  Save the scatter plot with savefig(), passing the path computed with os module as a parameter. 
+        https://docs.python.org/3/library/os.path.html
+    
+    VI. After running the analysis, ask the user if they want to proceed with displaying a scatter plot and viewing the results.
+        If the user clicks OK, the generated file is opened using os.startfile.
+        If the user clicks Cancel, the program does nothing apart from printing a debugging message.
+        https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
+    '''
+
+    # I.
+    # Standardise the data by scaling features into a normal distribution
     columns = df.select_dtypes(include='number').columns
-    x = df.loc[:, columns].values
-    x = StandardScaler().fit_transform(x)
+    columns_array = df.loc[:, columns].values                       # Create a Numpy array containing the values of columns var before transformation as it doesn't support pandas DataFrames
+    columns_array = StandardScaler().fit_transform(columns_array)   # Standardise the data with sklearn StandardScaler()
 
-    # Apply PCA, reducing the dataset to 2 components/variables
+    # II.
+    # Compute the PCA, reducing the dataset to 2 components/variables
     pca = PCA(n_components=2)
-    principal_components = pca.fit_transform(x)
+    principal_components = pca.fit_transform(columns_array)
 
-    # Create new DataFrame with the variables created by sklearn when computing the PCA, concatenating it
-    # along the columns with the original df containing only the species column. Since both DataFrames have 
-    # the same number of rows and are concatenated along the columns, the original df filtered for species
-    # is added as a new column to pca_df. Therefore, this concat aligns the species datapoints with the respective PCA based on the index.
+    # III.
+    # Create new DataFrame with the variables created by sklearn when computing the PCA
     pca_df = pd.DataFrame(data=principal_components, columns=['PCA_1', 'PCA_2'])
     pca_df = pd.concat([pca_df, df[['species']]], axis=1)
 
+    # IV. 
     # Visualize the PCA result
     # Create a dict object mapping colours to the different species
     # https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
@@ -560,3 +590,24 @@ def perform_PCA(df):
     plt.ylabel('Principal Component #2')
     plt.title('Principal Component Analysis with 2 Elements\n')
     plt.show()
+
+    # V.
+    # Specify folder in which PNG should be saved
+    folder = 'results'
+    file_name = 'V.PCA.png'
+    file_path = os.path.join(os.getcwd(), folder, file_name)
+
+    # Save plot
+    plt.savefig(fname=file_path)      
+
+    # VI. 
+    # Display message box with "OK" and "Cancel" buttons
+    response = messagebox.askokcancel("Principal Componenent Analysis", "A scatter plot of the computed PCA will be created and saved in the results directory. Please click OK to open the file.")
+
+    # If response is True open the file, otherwise do nothing
+    if response:
+        plt.show()
+        print(f"\tUser opened the plot.")
+    else:
+        print(f"\tUser closed the pop-up.")
+
