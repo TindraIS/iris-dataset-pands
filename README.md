@@ -6,7 +6,17 @@
 
 ## Description
 
-This repository was created in the context of the Programming &amp; Scripting module @ ATU, and contains a program named Petalist which performs an analysis of the Iris flower dataset.[^1] [^2]
+This repository was created in the context of the __Programming &amp; Scripting module__ @ ATU, and contains a program named _Petalist_ which performs an analysis of the Iris flower dataset. [^1] [^2] [^3]
+
+When running `analysis.py`, __the program entry point__, the `menu.py` module is triggered and a [graphic user interface (GUI)](https://raw.githubusercontent.com/TindraIS/pands-project/main/images/menu_screenshot.png) is computed with the tkinter library, displaying four clickable analysis options:
+- Get a descriptive summary
+- Identify and handling outliers
+    - Get an outlier summary by species
+    - Remove outliers from the dataset
+- Generate pair scatter plots
+- Generate histograms
+
+When one of the options is selected, the corresponding function is called back in `tools.py` and the output is saved in the /results directory.
 
 ### Data Source
 
@@ -16,12 +26,16 @@ The Iris flower dataset was created by the British statistician and biologist Ro
 
 I wanted to create a user-centric program that presents several analysis options, ensuring a scripting oriented-project opposed to what I had done for the other module, which was done on a Jupyter Notebook. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
 
-In terms of the concepts used, I incorporated what was shown in the lectures as well as some functions and modules from the weekly tasks: command-line arguments, creating text files, saving files, reading CSVs, try-except blocks, if statements, for loops, etc. Step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. 
+In terms of the concepts used, I incorporated what was shown in the lectures as well as some functions and modules from the weekly tasks: command-line arguments, creating text files, saving files, reading CSVs, try-except blocks, if statements, for loops, etc. 
 
 After adding the outliers function, I needed a way to ask the user if the analysis should be done with or without the outliers. It wouldn't make much sense to keep it if the plots didn't use the cleaned DataFrame as the data source. As a result, I added the function options and amended the opening_menu() parameters.
 
 
 Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
+
+### Comments
+
+The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
 
 ## Contents
 
@@ -70,3 +84,4 @@ Irina S.
 
 [^1]: [Iris flower dataset Wikipedia page](https://en.wikipedia.org/wiki/Iris_flower_data_set)
 [^2]: [README header inspired by Pandas GitHub Repository](https://github.com/pandas-dev/pandas)
+[^3]: [The Hitchhiker’s Guide to Python - Structure of the repository](https://docs.python-guide.org/writing/structure/#structure-of-the-repository)
