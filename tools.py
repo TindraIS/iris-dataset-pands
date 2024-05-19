@@ -507,7 +507,7 @@ def generate_pairplot_options(df,df_cleaned):
     Depending on the user's choice, it calls the generate_pairplot() function with the corresponding DataFrame.
     '''
 
-    response = messagebox.askyesno("Generate pair plot", "Would you like to generate the histogram without the outliers?")
+    response = messagebox.askyesno("Generate pair plot", "Would you like to generate the pair scatter plot without the outliers?")
 
     if response:
         generate_pairplot(df_cleaned)
@@ -589,7 +589,6 @@ def perform_PCA(df):
     plt.xlabel('Principal Component #1')
     plt.ylabel('Principal Component #2')
     plt.title('Principal Component Analysis with 2 Elements\n')
-    plt.show()
 
     # V.
     # Specify folder in which PNG should be saved
@@ -611,3 +610,17 @@ def perform_PCA(df):
     else:
         print(f"\tUser closed the pop-up.")
 
+def perform_PCA_options(df,df_cleaned):
+
+    '''
+    Helper function triggered by menu.py (button V in the GUI), displaying a message box which prompts the user 
+    to generate a scatter plot with the PCA using either the original DataFrame (df) or the cleaned DataFrame (df_cleaned) without outliers. 
+    Depending on the user's choice, it calls the generate_pairplot() function with the corresponding DataFrame.
+    '''
+
+    response = messagebox.askyesno("Compute PCA", "Would you like to perform the PCA without the outliers?")
+
+    if response:
+        perform_PCA(df_cleaned)
+    else:
+        perform_PCA(df)

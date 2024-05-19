@@ -14,7 +14,7 @@ import os
 import tools
 
 def opening_menu(username, df, df_cleaned):
-    
+
     '''
     This function computes a GUI using the tkinter library, displaying four clickable analysys options. Each of the
     options trigger a different function from tools.py: getting a descriptive summary, identifying and 
@@ -103,7 +103,7 @@ def opening_menu(username, df, df_cleaned):
     # https://www.geeksforgeeks.org/how-to-change-background-color-of-tkinter-optionmenu-widget/
     button2 = tk.OptionMenu(root, value_inside, *options_list) 
     button2['font'] = font_buttons
-    button2.place(relx=0.60, rely=0.6, anchor="center")  # Place button relative to the center of the window
+    button2.place(relx=0.60, rely=0.6, anchor="center")  
 
     # Se the background color of Options Menu & displayed options
     button2.config(width=23, 
@@ -129,7 +129,7 @@ def opening_menu(username, df, df_cleaned):
                         justify=button_justify, 
                         bg=button_bg, 
                         fg=button_fg)
-    button3.place(relx=0.60, rely=0.7, anchor="center")  # Place button relative to the center of the window
+    button3.place(relx=0.60, rely=0.7, anchor="center") 
     button3['font'] = font_buttons
 
     
@@ -144,8 +144,22 @@ def opening_menu(username, df, df_cleaned):
                         justify=button_justify, 
                         bg=button_bg, 
                         fg=button_fg)
-    button4.place(relx=0.60, rely=0.8, anchor="center")  # Place button relative to the center of the window
+    button4.place(relx=0.60, rely=0.8, anchor="center") 
     button4['font'] = font_buttons
+    
+    # Button 5 --------------------------------------------------------------------
+    
+    button5 = tk.Button(root, 
+                        text="V .compute PCA",  
+                        command=lambda: tools.perform_PCA_options(df, df_cleaned),
+                        width=button_width, 
+                        height=button_height, 
+                        anchor=button_anchor, 
+                        justify=button_justify, 
+                        bg=button_bg, 
+                        fg=button_fg)
+    button5.place(relx=0.60, rely=0.9, anchor="center")  
+    button5['font'] = font_buttons
 
     # Maximize the window
     root.state('zoomed')
