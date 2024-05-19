@@ -1,3 +1,12 @@
+'''
+Name: tools.py
+
+Author: Irina Simoes
+
+Description: This file contains a module with all the functions that perform the core tasks on the menu.py.
+
+'''
+
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.font as font
@@ -10,21 +19,39 @@ import sys
 
 # _____________________ GET IRIS _____________________
 def get_dataset():
+    
+    '''
+    This function fetches the Iris dataset from the Seaborn library as a DataFrame object.
 
-    # https://github.com/mwaskom/seaborn-data
+    I. Get a list of all datasets available in the Seasborn library
+       https://github.com/mwaskom/seaborn-data
+       https://seaborn.pydata.org/generated/seaborn.get_dataset_names.html
+
+    II. Use the filter() function with a lambda to filter elements in the datasets names list returned by Seaborn 
+        containing the 'iris' string. As the previous is wrapped in list, we then access it by indexing the first and only result 
+        returned by the lambda function.
+        https://seaborn.pydata.org/generated/seaborn.load_dataset.html
+        https://www.w3resource.com/python-exercises/lambda/python-lambda-exercise-39.php
+
+    III. Load the Iris dataset which is a DataFrame object by default, as the Seaborn library is closely integrated with pandas 
+         data structures. Then we use the return statement to send the DataFrame back to the caller of the function, enabling 
+         analysis.py to access the Iris dataset.
+         https://seaborn.pydata.org/generated/seaborn.load_dataset.html)]
+    '''
+
+    # I.
+    # Get a list of all datasets available in the Seasborn library
     datasets_list = sns.get_dataset_names()
 
-    # Access the list returned by Seaborn with datasets names, filtering out the string
-    # matching the 'iris' substring and adding it to a new list.
-    # Then access the list with the returned name by indexing the result.
+    # II.
+    # Access the list returned by Seaborn with datasets names
     iris_dataset = list(filter(lambda x: "iris" in x, datasets_list))[0]
 
     # Print dataset name (uncomment for sanity check) 
     #print(f"Dataset name is: {iris_dataset}")
 
-    # Load the dataset which is a DataFrame object by default, as the Seaborn library is 
-    # closely integrated with pandas data structures.
-    # https://seaborn.pydata.org/generated/seaborn.load_dataset.html)]
+    # III.
+    # Load the Iris dataset as df
     df = sns.load_dataset(iris_dataset)
 
     # Return the DataFrame object
@@ -35,20 +62,24 @@ def get_dataset():
 def descriptive_summary(df):
     '''
     This function creates a descriptive statistic summary of the variables in the Iris dataset.
+
     I. Initialise an empty string to store the summary and then we add overall summary, data types summary & 
         summary header for each species.
+
     II. Group the DataFrame by species & initialise a counter to be used to loop through them, as demonstrated in one of the lectures.
         Start the for loop - as we are grouping by multiple species, the group name will be a tuple so each group should be unpacked into two variables.
         Each iteration will then generate summary statistics for each species, and concatenate it to the summary container.
         https://realpython.com/pandas-groupby/
         https://realpython.com/python-for-loop/
         https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
+
     III. Save summary in a txt file with writer mode. As per Python official documentation, the file param in open() is a path-like object giving the pathname.
         Therefore, to keep the repository nicely organised, we can specify the folder where the file should be saved. As the program is meant to be ran on different
         machines, the os module is used to get a relative path, as an absolute path would throw an error. 
         https://docs.python.org/3/library/functions.html#open
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
+
     IV. Show message box & open the summary.txt file with the default text editor. As per Python documentation, 
         askokcancel returns a boolean value, so we check if response is True(OK) to open the file; otherwise we do nothing.
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
