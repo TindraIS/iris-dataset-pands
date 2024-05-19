@@ -173,7 +173,7 @@ def outliers_summary(df):
         which are stored in upper_array and lower_array. Then append each iteration to lower/upper_array_agg.
         https://numpy.org/doc/stable/reference/generated/numpy.where.html
         
-    IV. Create a final for loop to iterate through the combined list of variables and their corresponding outlier arrays.
+    IV. Create a final for loop to iterate through the combined list of variables and their corresponding outlier arrays created with zip().
         If any outliers are found, the arrays are not empty and so the outlier information is appended to the summary list.
         If no outliers are found, a message indicating no outliers is appended to the list.
         https://realpython.com/python-zip-function/
@@ -239,7 +239,7 @@ def outliers_summary(df):
 
         # IV.
         # Check if any of the arrays contain outliers and append accordingly to the list.
-        # Combine the variables and the arrays into a single iterable with zip() and loop through them 
+        # Map and combine the variables and the arrays into a single iterable with zip() and loop through them 
         for var, lower_array, upper_array in zip(variables, lower_array_agg, upper_array_agg):
             
             # If any of the arrays isn't empty, append the outlier information to the list
@@ -368,9 +368,9 @@ def generate_histogram(df):
 
     # I. 
     # Get the list of columns names in the DataFrame
-    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
     variables = df.select_dtypes(include='number').columns
-    
+    species = df['species'].unique()
+
     # Dynamically calculate the number of rows and columns for the subplots
     num_variables = len(variables)       # Check how many variables the dataset contains
     num_rows = (num_variables + 1) // 2  # Ensure there are at least 2 plots per row
@@ -378,22 +378,37 @@ def generate_histogram(df):
     
     # II.
     # Create subplots
-    fig, axes = plt.subplots(num_rows, num_columns, figsize=(10, 6))
+    fig, axes = plt.subplots(num_rows, num_columns, figsize=(14, 8))
     
     # Plot histograms for each variable
-    # https://napsterinblue.github.io/notes/python/viz/subplots/
     # https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
     # Flatten the axes array
-    axes = axes.flatten()           
+    axes = axes.flatten()
 
-    # Use enumerate() to get both the index and value of each pair
+    # Create a dict object mapping colours to the different species
+    # https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
+    colors = {'setosa': 'black', 'versicolor': 'orange', 'virginica': 'green'}
+
+    # Refactor the same looping logic as in def outliers_summary(df):
+    # use zip() to map each element from the variables list to the corresponding item from the axes list, combining them into a single iterable;
+    # use enumerate() to add an index to these pairs.
+    # During each iteration index is the current loop counter, col is the current variable, and
+    # ax is the current subplot axis.
     for index, (col, ax) in enumerate(zip(variables, axes)):
-        ax.hist(df[col], bins=20, color='darkgreen', edgecolor='black')
+        for spec in species:
+            # Filter dataframe for the current species
+            df_species = df[df['species'] == spec]
+            # Plot the histogram
+            ax.hist(df_species[col], bins=10, color=colors[spec], alpha=0.5, label=spec, edgecolor='black')
         ax.set_title(col)
         ax.set_xlabel('Value')
         ax.set_ylabel('Frequency')
-        
+        ax.legend(title='Species')
+    
+        print(f"\tHistograms have been computed.")
+
         # Cleanup the remainder unused subplots
+        # https://napsterinblue.github.io/notes/python/viz/subplots/
         if index + 1 >= num_variables:
             [ax.set_visible(False) for ax in axes.flatten()[index+1:]]
             break
