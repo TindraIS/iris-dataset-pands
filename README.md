@@ -1,6 +1,6 @@
 <picture align="center">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/dark_header.png?token=GHSAT0AAAAAACQCQDSAKC7NYT7CVB6XSCO2ZSJ4ZDQ">
-  <img alt="Light header" src="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/light_header.png?token=GHSAT0AAAAAACQCQDSB543IWT4SWA5PVUDKZSJ3XIQ">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/dark_header.png">
+  <img alt="Light header" src="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/light_header.png">
 </picture>
 
 
