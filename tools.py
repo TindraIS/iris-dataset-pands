@@ -442,10 +442,10 @@ def generate_pairplot(df):
     # I.
     # Plot a pairplot to analyse the interaction between the different variables
     # https://python-charts.com/correlation/pairs-plot-seaborn/
-    sns.pairplot(df, hue="species", corner=True, kind="reg", plot_kws={'line_kws':{'color':'black'}})
+    sns.pairplot(df, hue="species", corner=False, kind="reg", plot_kws={'line_kws':{'color':'black'}})
 
     # Adjust layout & set subplot suptitle
-    plt.suptitle("Attribute Pairs by Species", fontsize=16)
+    plt.suptitle("Attribute Pairs by Species\n", fontsize=14)
     plt.tight_layout()
 
     # II.
