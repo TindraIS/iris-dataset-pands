@@ -441,6 +441,13 @@ def generate_histogram(df):
     print("\n\t\u2713 Histogram function successfully finished.")
 
 def generate_histogram_options(df,df_cleaned):
+
+    '''
+    Helper function triggered by menu.py (button IV in the GUI), displaying a message box which prompts the user 
+    to generate histograms for each variable using either the original DataFrame (df) or the cleaned DataFrame (df_cleaned) 
+    without outliers. Depending on the user's choice, it calls the generate_histogram() function with the corresponding DataFrame.
+    '''
+
     response = messagebox.askyesno("Generate histogram", "Would you like to generate the histogram without the outliers?")
 
     if response:
@@ -484,6 +491,13 @@ def generate_pairplot(df):
         print(f"\tUser closed the pop-up.")
 
 def generate_pairplot_options(df,df_cleaned):
+
+    '''
+    Helper function triggered by menu.py (button III in the GUI), displaying a message box which prompts the user 
+    to generate pair scatter plots using either the original DataFrame (df) or the cleaned DataFrame (df_cleaned) without outliers. 
+    Depending on the user's choice, it calls the generate_pairplot() function with the corresponding DataFrame.
+    '''
+
     response = messagebox.askyesno("Generate pair plot", "Would you like to generate the histogram without the outliers?")
 
     if response:
