@@ -31,10 +31,9 @@ In terms of the concepts used, I incorporated what was shown in the lectures as 
 
 After adding the outliers function, I needed a way to ask the user if the analysis should be done with or without the outliers. It wouldn't make much sense to keep it if the plots didn't use the cleaned DataFrame as the data source. As a result, I added the function options and amended the opening_menu() parameters.
 
-
 Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
 
-### Commentary 
+### Commentary
 
 The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
 
