@@ -38,7 +38,7 @@ pands-project/
 │   └── IV.histograms.png            # Output of tools.generate_histogram(df)
 ├── analysis.py                      # Program entry point
 ├── error.log                        # File capturing info on errors that occur in analysis.py
-├── menu.py                          # Module containing the function that computes the GUI with tkinter
+├── menu.py                          # Module containing the function that computes the GUI with tkinter when analysis.py is run
 ├── tools.py                         # Module containing functions that perform the core tasks on the menu.py
 ├── .gitignore                       # File specifying all the untracked files that Git should ignore
 └── README.md                        # This file
