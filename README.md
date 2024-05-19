@@ -3,11 +3,13 @@
   <img alt="Light header" src="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/light_header.png">
 </picture>
 
+
 ## Description
-This repository was created in the context of the Programming &amp; Scripting module @ ATU, and contains a program named Petalist which performs an analysis of the Iris flower dataset for the .[^1] [^2]
+This repository was created in the context of the Programming &amp; Scripting module @ ATU, and contains a program named Petalist which performs an analysis of the Iris flower dataset.[^1] [^2]
 
 ## Contents
 
+```
 pands-project/
 ├── images/
 │   ├── dark_header.png              # README header displayed whenever GitHub's theme is dark
@@ -25,6 +27,7 @@ pands-project/
 ├── tools.py                         # Module containing functions that perform the core tasks on the menu.py
 ├── .gitignore                       # File specifying all the untracked files that Git should ignore
 └── README.md                        # This file
+```
 
 ## Getting Started
 
