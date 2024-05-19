@@ -16,6 +16,9 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+from sklearn import datasets
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
 
 # _____________________ GET IRIS _____________________
 def get_dataset():
@@ -55,6 +58,10 @@ def get_dataset():
 
     # Return the DataFrame object
     return df
+
+    if __name__ == __main__:
+        pass
+
 
 
 # _____________________ TXT SUMMARY _____________________
@@ -150,6 +157,7 @@ def descriptive_summary(df):
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Descriptive summary function successfully finished.")
+
 
 # _____________________ OUTLIERS _____________________
 def outliers_summary(df):
@@ -279,7 +287,6 @@ def outliers_summary(df):
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Outliers summary function successfully finished.")
 
-
 def outliers_cleanup(df):
     '''
     Using the same logic as outliers_summary(df), this function computes a summary of outliers present in the Iris dataset by species.
@@ -393,8 +400,7 @@ def generate_histogram(df):
     # Refactor the same looping logic as in def outliers_summary(df):
     # use zip() to map each element from the variables list to the corresponding item from the axes list, combining them into a single iterable;
     # use enumerate() to add an index to these pairs.
-    # During each iteration index is the current loop counter, col is the current variable, and
-    # ax is the current subplot axis.
+    # During each iteration index is the current loop counter, col is the current variable, and ax is the current subplot axis.
     for index, (col, ax) in enumerate(zip(variables, axes)):
         for spec in species:
             # Filter dataframe for the current species
@@ -506,3 +512,51 @@ def generate_pairplot_options(df,df_cleaned):
     else:
         generate_pairplot(df)
 
+
+# _____________________ PAIRPLOT _____________________
+def perform_PCA(df):
+    # https://www.turing.com/kb/guide-to-principal-component-analysis
+    # https://towardsdatascience.com/a-step-by-step-introduction-to-pca-c0d78e26a0dd
+
+    # Standardise the range of variables to analyse the contribution of each variable equally. This calculation
+    # categorises the variables that are dominating the other variables of small ranges, preventing a biased result. 
+    # The goal is to mimic a normal distribution by having a mean of 0 and a standard deviation of 1.
+    # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+    columns = df.select_dtypes(include='number').columns
+    x = df.loc[:, columns].values
+    x = StandardScaler().fit_transform(x)
+
+    # Apply PCA, reducing the dataset to 2 components/variables
+    pca = PCA(n_components=2)
+    principal_components = pca.fit_transform(x)
+
+    # Create new DataFrame with the variables created by sklearn when computing the PCA, concatenating it
+    # along the columns with the original df containing only the species column. Since both DataFrames have 
+    # the same number of rows and are concatenated along the columns, the original df filtered for species
+    # is added as a new column to pca_df. Therefore, this concat aligns the species datapoints with the respective PCA based on the index.
+    pca_df = pd.DataFrame(data=principal_components, columns=['PCA_1', 'PCA_2'])
+    pca_df = pd.concat([pca_df, df[['species']]], axis=1)
+
+    # Visualize the PCA result
+    # Create a dict object mapping colours to the different species
+    # https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
+    colors = {'setosa': 'black', 'versicolor': 'orange', 'virginica': 'green'}
+    species = df['species'].unique()
+
+    # Define plot size
+    plt.figure(figsize=(8, 6))
+
+    # Loop through each species in the DataFrame, applying the same logic as in generate_histogram()
+    for spec in species:
+        # Filter dataframe for the current species
+        df_species = pca_df['species'] == spec
+        plt.scatter(pca_df.loc[df_species, 'PCA_1'],
+                    pca_df.loc[df_species, 'PCA_2'],
+                    color=colors[spec])
+
+    # Format scatterplot
+    plt.legend(species)
+    plt.xlabel('Principal Component #1')
+    plt.ylabel('Principal Component #2')
+    plt.title('Principal Component Analysis with 2 Elements\n')
+    plt.show()
