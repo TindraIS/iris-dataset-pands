@@ -6,6 +6,7 @@ import tools
 
 def opening_menu(username, df, df_cleaned):
 
+    # https://www.geeksforgeeks.org/popup-menu-in-tkinter/
     # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     # Create the main window
     root = tk.Tk()
