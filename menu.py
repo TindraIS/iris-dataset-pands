@@ -14,6 +14,12 @@ import os
 import tools
 
 def opening_menu(username, df, df_cleaned):
+    
+    '''
+    This function computes a GUI using the tkinter library, displaying four clickable analysys options. Each of the
+    options trigger a different function from tools.py: getting a descriptive summary, identifying and 
+    handling outliers, generating pair scatter plots, and generating histograms. 
+    '''
 
     # https://www.geeksforgeeks.org/popup-menu-in-tkinter/
     # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
