@@ -19,7 +19,6 @@ import sys
 
 # _____________________ GET IRIS _____________________
 def get_dataset():
-    
     '''
     This function fetches the Iris dataset from the Seaborn library as a DataFrame object.
 
@@ -74,8 +73,9 @@ def descriptive_summary(df):
         https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
 
     III. Save summary in a txt file with writer mode. As per Python official documentation, the file param in open() is a path-like object giving the pathname.
-        Therefore, to keep the repository nicely organised, we can specify the folder where the file should be saved. As the program is meant to be ran on different
-        machines, the os module is used to get a relative path, as an absolute path would throw an error. 
+        Therefore, to keep the repository nicely organised, we specify the folder where the file should be saved. As the program is meant to be ran on different
+        machines, the os module is used to construct a full path, as a hardcoded absolute path would throw an error.  Also, the file_path makes use of os.path.join 
+        to ensure compatibility across different operating systems. 
         https://docs.python.org/3/library/functions.html#open
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
@@ -152,13 +152,56 @@ def descriptive_summary(df):
 
 # _____________________ OUTLIERS _____________________
 def outliers_summary(df):
+    '''
+    This function computes a summary of outliers present in the Iris dataset by species, using the Inter Quartile Range (IQR) 
+    approach to determine if an entry is an outlier. Given that the IQR measures the middle 50% of the data, outliers are 
+    typically defined by statisticians as data points that fall 1.5 times above the third quartile or below the first quartile.
+    Therefore, the formulas that define the outliers thresholds are:
+            - Lower Bound = Q1 - 1.5 x IQR
+            - Upper Bound = Q3 + 1.5 x IQR
+    https://www.geeksforgeeks.org/detect-and-remove-the-outliers-using-python/
+    https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/box-whisker-plots/a/identifying-outliers-iqr-rule
+    
+    I. Create a container for the DataFrame columns names which will be analysed for outliers, filtering out any categorical features.
+       https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
+    
+    II. Initialise outlier_summary as an empty list to store the outlier information for each species. Then start looping through 
+        each unique species in the df, filtering it for the current species. Bearing in mind that all iterations will have to be recorded,
+        we create empty arrays(lower/upper_array_agg) which will serve as containers to aggregate the outlier indices.
 
+    III. Compute the IQR calculation for each variable within each species using Numpy's where() function to identify the indices of outliers, 
+        which are stored in upper_array and lower_array. Then append each iteration to lower/upper_array_agg.
+        https://numpy.org/doc/stable/reference/generated/numpy.where.html
+        
+    IV. Create a final for loop to iterate through the combined list of variables and their corresponding outlier arrays.
+        If any outliers are found, the arrays are not empty and so the outlier information is appended to the summary list.
+        If no outliers are found, a message indicating no outliers is appended to the list.
+        https://realpython.com/python-zip-function/
+
+    V.  The outlier information is written to a text file, with each item in the outlier_summary list being written line by line 
+        with writer mode. As per Python official documentation, the file param in open() is a path-like object giving the pathname.
+        Therefore, to keep the repository nicely organised, we specify the folder where the file should be saved. 
+        As the program is meant to be ran on different machines, the os module is used to construct a full path, as a hardcoded absolute 
+        path would throw an error. Also, the file_path makes use of os.path.join to ensure compatibility across different operating systems. 
+        https://docs.python.org/3/library/functions.html#open
+        https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+        https://docs.python.org/3/library/os.path.html
+    
+    VI. After running the analysis, ask the user if they want to proceed with generating a scatter plot and viewing the results.
+        If the user clicks OK, the generated file is opened using os.startfile.
+        If the user clicks Cancel, the program does nothing apart from printing a debugging message.
+        https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
+    '''
+
+    # I. 
     print(f"Starting {__name__}/outliers_summary()")
     
     # Get the list of columns names in the DataFrame
-    # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
     variables = df.select_dtypes(include='number').columns
-    outlier_summary = []  # Initialize an empty list to store outlier information
+    
+    # II.
+    # Initialise an empty list to store outlier information
+    outlier_summary = []  
 
     # Iterate over unique species values
     for species in df['species'].unique():
@@ -172,6 +215,7 @@ def outliers_summary(df):
         lower_array_agg = []
         upper_array_agg = []
 
+        # III.
         for var in variables: 
             # Calculate the upper and lower limits
             Q1 = df_species[var].quantile(0.25) # The 1st quartile is the value below which 25% of the data can be found
@@ -185,28 +229,30 @@ def outliers_summary(df):
             lower = Q1 - 1.5 * IQR
             upper = Q3 + 1.5 * IQR
             
-            # Create arrays of Boolean values indicating the outlier rows using Numpy’s `where` function
-            # to find indices of all data points where the variable does meets the threshold condition
-            # https://numpy.org/doc/stable/reference/generated/numpy.where.html
+            # Create arrays of Boolean values indicating the outlier rows using Numpy's where() function
+            # to find indices of all data points where the variable does meet the threshold condition
             upper_array = np.where(df_species[var] >= upper)[0]
             lower_array = np.where(df_species[var] <= lower)[0]
 
             lower_array_agg.append(lower_array)
             upper_array_agg.append(upper_array)
 
+        # IV.
         # Check if any of the arrays contain outliers and append accordingly to the list.
         # Combine the variables and the arrays into a single iterable with zip() and loop through them 
         for var, lower_array, upper_array in zip(variables, lower_array_agg, upper_array_agg):
+            
             # If any of the arrays isn't empty, append the outlier information to the list
             if len(lower_array) > 0 or len(upper_array) > 0:
                 outlier_summary.append(f'\n\t\tOutliers found for {var}: \n\t\t\tLower bound: {lower_array} \n\t\t\tUpper bound: {upper_array}\n')
                 print(f"\t\tOutlier summary for {var} appended to the array.")
-            # If the arrays are empty, do nothing to prevent cluttering the list
+            
+            # If the arrays are empty, append a message stating so to maintain completeness 
             else:
                 outlier_summary.append(f'\n\t\tNo outliers found for {var}\n')
                 print(f"\t\tOutlier summary for {var} appended to the array.")
     
-    # III.
+    # V.
     # Specify folder in which txt should be saved
     folder = 'results'
     file_name = 'II.outliers_summary.txt'
@@ -218,20 +264,27 @@ def outliers_summary(df):
             file.write(item)
         print(f"\t\tOutlier summary for all variables for appended to the txt file.")
 
-    # IV. 
+    # VI. 
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
 
     # If response is True open the file, otherwise do nothing
     if response:
         os.startfile(file_path)
+        print(f"\tUser opened the file.")
     else:
-         pass
+        print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Outliers summary function successfully finished.")
 
+
 def outliers_cleanup(df):
+    '''
+    Using the same logic as outliers_summary(df), this function computes a summary of outliers present in the Iris dataset by species
+    '''
+
+    # I.
     print(f"Starting {__name__}/outliers_cleanup()")
     
     # Get the list of columns names in the DataFrame
@@ -265,6 +318,7 @@ def outliers_cleanup(df):
             lower_outliers = np.where(df_species[var] <= lower)[0]
             all_outliers = np.concatenate((upper_outliers, lower_outliers))
             
+            # II.
             # Collect all indices by mapping local indices in df_species back to the global indices in the original df 
             # with iloc
             # https://www.geeksforgeeks.org/python-extracting-rows-using-pandas-iloc/
@@ -276,20 +330,22 @@ def outliers_cleanup(df):
             # https://www.geeksforgeeks.org/append-extend-python/
             outlier_indices.extend(global_outliers)
     
+    # III.
     # Drop outliers from the original df
     df = df.drop(index=outlier_indices)
 
-    # Save the cleaned df as .csv file & specify folder in which PNG should be saved
+    # Save the cleaned df as .csv file & specify folder in which the csv should be saved
     folder = 'results'
     file_name = 'II.dataframe_cleaned.csv'
     file_path = os.path.join(os.getcwd(), folder, file_name)
     df.to_csv(file_path,index=False)
     print("\tNew df saved as a .csv file.")
-    # 
+   
+    # IV.
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Outliers summary", "A text file with an outlier summary by species will be saved in the results directory. Please click OK to open the file.")
 
-    # If response is True save the df as a .csv, otherwise do nothing
+    # If response is True open the csv, otherwise do nothing
     if response:
         os.startfile(file_path)
         print(f"\tUser opened the file.")
@@ -307,6 +363,7 @@ def generate_histogram(df):
     '''
     This function saves a histogram of each variable in the Iris dataset to PNG files.
     '''
+
     print(f"Starting {__name__}/generate_histogram()")
 
     # I. 
@@ -361,8 +418,9 @@ def generate_histogram(df):
     # If response is True open the file, otherwise do nothing
     if response:
         fig.show()
+        print(f"\tUser opened the plot.")
     else:
-         pass
+        print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Histogram function successfully finished.")
