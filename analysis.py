@@ -1,18 +1,21 @@
-import tkinter as tk
-from tkinter import messagebox
-import tkinter.font as font
 import argparse
-import seaborn as sns
-import matplotlib.pyplot as plt
+import os
 import pandas as pd
 import tools
-import os
 import menu
+import logging
 
 '''
-I. Wrap code in a try-except statement to handle errors in case arguments are not provided in the cmd line
+I. As showed in one of the lectures, use the logging module to record the error details to a txt file for debugging purposes
+    with the below configurations passed as parameters:
+    - Only log messages with level ERROR or higher.
+    - Error messages will be recoded in the error.log file.
+    - Open the log file in append mode, so that previous data doesn't get overriden.
+    - Format of the error messages with the time it occured, error level and error message.
 
-II. Initialise the ArgumentParser object, which allows for cmd line arguments to be defined.
+II. Wrap code in a try-except statement to handle errors in case arguments are not provided in the cmd line
+
+III. Initialise the ArgumentParser object, which allows for cmd line arguments to be defined.
     Customise the parser by:
         (1) specifying the program name that will be used in the usage message;
         (2) defining a general description for the program and a closing message.
@@ -25,7 +28,7 @@ II. Initialise the ArgumentParser object, which allows for cmd line arguments to
         (3) Set metavar to empty to clean up the -h message by not showing the uppercase dest values (USERNAME);
         (4) Set the helper with a brief description of what the argument does.
 
-III. Specify tkinter opening menu function parameters:
+IV. Specify tkinter opening menu function parameters:
         (1) usarname is taken from the cmd line argument
         (2) df is the Iris dataset returned by the get_dataset() function in the tools module
         (3) df_cleaned is the .csv Iris dataset returned by the outliers_cleanup() function in the tools module
@@ -34,9 +37,11 @@ III. Specify tkinter opening menu function parameters:
             we construct the full file path using the os module.
             - Finally, the data is loaded into a DataFrame using pandas' read_csv(), passing the file path as a param.
 
-IV. Call the opening_menu() function from the menu module, passing in the above parameters.
+V. Call the opening_menu() function from the menu module, passing in the above parameters.
 
 References:
+    - https://docs.python.org/3/howto/logging.html
+    - https://realpython.com/python-logging/
     - https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
     - https://realpython.com/command-line-interfaces-python-argparse/
     - https://stackoverflow.com/questions/1009860/how-can-i-read-and-process-parse-command-line-arguments
@@ -44,9 +49,13 @@ References:
     - https://www.w3schools.com/python/python_try_except.asp
 '''
 
-# I. 
+# I.
+# Set up logging configuration
+logging.basicConfig(level=logging.ERROR, filename='error.log', filemode='a',
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+# II. 
 try:
-    # II. 
+    # III. 
     # Create an ArgumentParser object to handle cmd line arguments
     parser = argparse.ArgumentParser(
         prog="analysis.py",
@@ -62,7 +71,7 @@ try:
     # Parse the cmd line arguments
     args = parser.parse_args()
 
-    # III. 
+    # IV. 
     # Declare variables that contain the opening_menu() parameters
     username = args.username                                # Assign the username provided in the cmd line
     df = tools.get_dataset()                                # Load the dataset using a function from the tools module
@@ -72,10 +81,12 @@ try:
     file_path = os.path.join(os.getcwd(),folder,file_name)  # Construct the full file path
     df_cleaned = pd.read_csv(file_path)                     # Read in the cleaned dataset into a pandas DataFrame
 
-    # IV.
+    # V.
     # Call the opening menu function from the menu module, passing in the username and DataFrames as parameters
     menu.opening_menu(username, df, df_cleaned)
 
 except:
-    # If an exception occurs print the help message, including the program usage and information about the arguments
+    # If an exception occurs, log the error before printing the help message
+    logging.error("An error occurred", exc_info=True)
+    # Print the help message, including the program usage and information about the arguments
     parser.print_help()
