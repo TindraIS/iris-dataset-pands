@@ -34,10 +34,12 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
   - __Get an outlier summary by species__
     
     It computes a summary of outliers present in the Iris dataset by species, using the Inter Quartile Range (IQR) approach to determine if an entry is an outlier using the below formulas: [^4] [^5]
-    
+    <div align="center">
+
     ![Lower Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Lower&space;Bound}=Q_1-1.5\times\text{IQR}})
     
     ![Upper Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Upper&space;Bound}=Q_3&plus;1.5\times\text{IQR}})
+    </div>
     
     <details>
     <summary>The below resources were used to solve the task:</summary>
