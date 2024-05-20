@@ -13,6 +13,20 @@ import tkinter.font as font
 import os
 import tools
 
+def closing_window(root):
+    '''
+    This function ensures the program exits completely after clicking X, without triggering an error.
+    https://stackoverflow.com/questions/110923/how-do-i-close-a-tkinter-window
+    https://stackoverflow.com/questions/67421583/python-tkinter-window-dont-close-with-root-quit-when-using-os-system
+    https://stackoverflow.com/questions/9591350/what-is-difference-between-sys-exit0-and-os-exit0
+    https://docs.python.org/3/library/os.html#os._exit
+    '''
+    if messagebox.askokcancel('Quit', 'Are you sure you want to exit?'):
+        root.destroy()
+        os._exit('EX_OK') # EX_OK code passed to specify that no error occurred, making this function preferred over sys_exit() 
+                          # which raises an exception
+
+
 def opening_menu(username, df, df_cleaned):
 
     '''
@@ -26,6 +40,10 @@ def opening_menu(username, df, df_cleaned):
     # Create the main window
     root = tk.Tk()
     root.title("PETALIST || Iris Dataset Analysis")
+
+    # Handle the menu close event gracefully
+    # https://stackoverflow.com/questions/110923/how-do-i-close-a-tkinter-window
+    root.protocol("WM_DELETE_WINDOW", lambda: closing_window(root))
 
     # Load image
     folder = 'images'

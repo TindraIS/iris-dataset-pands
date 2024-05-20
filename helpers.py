@@ -59,3 +59,4 @@ def save_plot(folder, file_name, fig):
     file_name = file_name    
     file_path = os.path.join(os.getcwd(), folder, file_name)
     fig.savefig(fname=file_path)
+    
