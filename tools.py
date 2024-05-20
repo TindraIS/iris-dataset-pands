@@ -443,7 +443,6 @@ def generate_histogram(df, file_name):
     print("\n\t\u2713 Histogram function successfully finished.")
 
 def generate_histogram_options(df,df_cleaned):
-
     '''
     Helper function triggered by menu.py (button IV in the GUI), displaying a message box which prompts the user 
     to generate histograms for each variable using either the original DataFrame (df) or the cleaned DataFrame (df_cleaned) 
@@ -460,7 +459,6 @@ def generate_histogram_options(df,df_cleaned):
 
 # _____________________ PAIRPLOT _____________________
 def generate_pairplot(df, file_name):
-
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
     '''
@@ -501,7 +499,6 @@ def generate_pairplot(df, file_name):
     print("\n\t\u2713 Pairplot function successfully finished.")
 
 def generate_pairplot_options(df,df_cleaned):
-
     '''
     Helper function triggered by menu.py (button III in the GUI), displaying a message box which prompts the user 
     to generate pair scatter plots using either the original DataFrame (df) or the cleaned DataFrame (df_cleaned) without outliers. 
@@ -518,7 +515,6 @@ def generate_pairplot_options(df,df_cleaned):
 
 # _____________________ PCA _____________________
 def perform_PCA(df, file_name):
-
     '''
     This function computes a PCA and reduces the 4-dimensional Iris dataset to 2 dimensions/features, outputing 
     a scatter plot of the principal components making it easier to understand how are species distributed.
@@ -542,12 +538,12 @@ def perform_PCA(df, file_name):
     IV. Compute a scatter plot to visualise the PCA with a for loop through each species in the DataFrame, applying the same logic as 
         in generate_histogram() function.
 
-    V.  Save the scatter plot with savefig(), passing the path computed with os module as a parameter. 
+    V.  Call the save_plot function from helpers.py module to save plot as a PNG file.
         https://docs.python.org/3/library/os.path.html
     
-    VI. After running the analysis, ask the user if they want to proceed with displaying a scatter plot and viewing the results.
-        If the user clicks OK, the generated file is opened using os.startfile.
-        If the user clicks Cancel, the program does nothing apart from printing a debugging message.
+    VI. Show message box prompting the user to choose to open the the file or not. As per Python documentation, 
+        askokcancel returns a boolean value, so we check if response is True(OK) to save & open the plot with plt.show(); if False the plot will just be saved.
+        https://docs.python.org/3/library/tkinter.messagebox.html
         https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
     '''
 
@@ -617,7 +613,6 @@ def perform_PCA(df, file_name):
     print("\n\t\u2713 Pairplot function successfully finished.")
 
 def perform_PCA_options(df,df_cleaned):
-
     '''
     Helper function triggered by menu.py (button V in the GUI), displaying a message box which prompts the user 
     to generate a scatter plot with the PCA using either the original DataFrame (df) or the cleaned DataFrame (df_cleaned) without outliers. 
