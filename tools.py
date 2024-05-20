@@ -337,27 +337,29 @@ def outliers_cleanup(df):
     # III.
     # Drop outliers from the original df
     df = df.drop(index=outlier_indices)
+    
 
-    # Save the cleaned df as .csv file & specify folder in which the csv should be saved
-    folder = 'results'
-    file_name = 'II.dataframe_cleaned.csv'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
-    df.to_csv(file_path,index=False)
-    print("\tNew df saved as a .csv file.")
-   
-    # IV.
+    # III.
+    # Run 'save_csv_file' function to save the cleaned DataFrame as a CSV file
+    file_path = helpers.save_csv_file('results', 'II.dataframe_cleaned.csv', df)
+    
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Outliers cleanup", "A CSV file containing the Iris dataset without outliers will be saved in the results directory. Please click OK to open the file.")
 
-    # If response is True open the CSV, otherwise do nothing
+    # IV.
+    # If response is True save & open the CSV file, otherwise just save the CSV
     if response:
+        file_path
+        print(f"\tOutliers summary added to the txt file.")
         os.startfile(file_path)
         print(f"\tUser opened the file.")
     else:
+        file_path
+        print(f"\tOutliers summary added to the txt file.")
         print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-    print("\n\t\u2713 Outliers cleanup function successfully finished.")
+    print("\n\t\u2713 Descriptive summary function successfully finished.")
 
     return df
         
