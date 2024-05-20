@@ -3,7 +3,7 @@
   <img alt="Light header" src="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/light_header.png">
 </picture>
 
---- 
+
 ## Description
 
 This repository was created in the context of the __Programming &amp; Scripting module__ @ ATU, and contains a program named _Petalist_ which performs an analysis of the Iris flower dataset. [^1] [^2] [^3]
@@ -11,133 +11,104 @@ This repository was created in the context of the __Programming &amp; Scripting 
 When running `analysis.py`, _the program entry point_, the `menu.py` module is triggered and a [graphic user interface (GUI)](https://raw.githubusercontent.com/TindraIS/pands-project/main/images/menu_screenshot.png) is computed with the tkinter library, displaying five clickable analysis options. When one of the options is selected, the corresponding function is called back in `tools.py` and the output is saved in the /results directory.
 
 - __Get a descriptive summary__
-      
-  It triggers the `descriptive_summary()` in `tools.py` and creates a descriptive statistic summary of the variables in the Iris dataset.
-    <details>
-      <summary>The below resources were used to solve the task:</summary>
-        <p>
-  - https://realpython.com/pandas-groupby/
-
-  - https://realpython.com/python-for-loop/
-
-  - https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/ 
-
-  - https://docs.python.org/3/library/functions.html#open
-
-  - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
-
-  - https://docs.python.org/3/library/os.path.html
-
-  - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
-
-  - https://docs.python.org/3/library/tkinter.messagebox.html
   
+  It triggers the `descriptive_summary()` in `tools.py` and creates a descriptive statistic summary of the variables in the Iris dataset.
+  
+  <details>
+  <summary>The below resources were used to solve the task:</summary>
+  
+  - https://realpython.com/pandas-groupby/
+  - https://realpython.com/python-for-loop/
+  - https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/ 
+  - https://docs.python.org/3/library/functions.html#open
+  - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+  - https://docs.python.org/3/library/os.path.html
+  - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+  - https://docs.python.org/3/library/tkinter.messagebox.html
   - https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
-        </p>
-      </details>
+  
+  </details>
 
-
-  - __Identify and handling outliers__
-    - __Get an outlier summary by species__
-      
-      It computes a summary of outliers present in the Iris dataset by species, using the Inter Quartile Range (IQR) approach to determine if an entry is an outlier using the below formulas: [^4] [^5]
-      
-      ![Lower Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Lower&space;Bound}=Q_1-1.5\times\text{IQR}})
-      
-      ![Upper Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Upper&space;Bound}=Q_3&plus;1.5\times\text{IQR}})
-
-      <details>
-        <summary>The below resources were used to solve the task:</summary>
-          <p>
-      - https://www.geeksforgeeks.org/detect-and-remove-the-outliers-using-python/
-
-      - https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/box-whisker-plots/a/identifying-outliers-iqr-rule
-
-      - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
-
-      - https://numpy.org/doc/stable/reference/generated/numpy.where.html
-
-      - https://realpython.com/python-zip-function/
-
-      - https://docs.python.org/3/library/functions.html#open
-
-      - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
-
-      - https://docs.python.org/3/library/os.path.html
-
-      - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
-          </p>
-        </details>
-
-    - __Remove outliers from the dataset__
-
-      Using the same IQR logic, this option removes the outliers present in the Iris dataset for each of the species.
-
-      <details>
-        <summary>The below resources were used to solve the task:</summary>
-          <p>
-      - https://www.geeksforgeeks.org/python-extracting-rows-using-pandas-iloc/
-
-      - https://www.geeksforgeeks.org/append-extend-python/
-
-      - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-          </p>
-        </details>
-
-
-- __Generate pair scatter plots__
-
-  It outputs a scatter plot of each pair of variables of the Iris dataset, prompting the user to choose to compute the plot with or without outliers.
-
-  <details>
+- __Identify and handling outliers__
+  
+  - __Get an outlier summary by species__
+    
+    It computes a summary of outliers present in the Iris dataset by species, using the Inter Quartile Range (IQR) approach to determine if an entry is an outlier using the below formulas: [^4] [^5]
+    
+    ![Lower Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Lower&space;Bound}=Q_1-1.5\times\text{IQR}})
+    
+    ![Upper Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Upper&space;Bound}=Q_3&plus;1.5\times\text{IQR}})
+    
+    <details>
     <summary>The below resources were used to solve the task:</summary>
-      <p>
-    - https://python-charts.com/correlation/pairs-plot-seaborn/
-      </p>
-    </details>
-
-
-- __Generate histograms__
-
-  It saves a histogram subplot of each variable in the Iris flower dataset as a PNG file.
-
-  <details>
-    <summary>The below resources were used to solve the task:</summary>
-      <p>
-    - https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
-
-    - https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
-
-    - https://napsterinblue.github.io/notes/python/viz/subplots/
-
-    - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-      </p>
-    </details>
-
-
-- __Compute PCA__
-
-  It computes a PCA and reduces the 4-dimensional Iris dataset to 2 dimensions/features, outputing 
-  a scatter plot of the principal components making it easier to understand how are species distributed.
-
-  <details>
-    <summary>The below resources were used to solve the task:</summary>
-      <p>
-    - https://www.turing.com/kb/guide-to-principal-component-analysis
-
-    - https://towardsdatascience.com/a-step-by-step-introduction-to-pca-c0d78e26a0dd
-
-    - https://builtin.com/machine-learning/pca-in-python
-
-    - https://saturncloud.io/blog/what-is-sklearn-pca-explained-variance-and-explained-variance-ratio-difference
-
-    - https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
-
+    
+    - https://www.geeksforgeeks.org/detect-and-remove-the-outliers-using-python/
+    - https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/box-whisker-plots/a/identifying-outliers-iqr-rule
+    - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
+    - https://numpy.org/doc/stable/reference/generated/numpy.where.html
+    - https://realpython.com/python-zip-function/
+    - https://docs.python.org/3/library/functions.html#open
+    - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
     - https://docs.python.org/3/library/os.path.html
-
     - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
-      </p>
+    
     </details>
+    
+  - __Remove outliers from the dataset__
+  
+    Using the same IQR logic, this option removes the outliers present in the Iris dataset for each of the species.
+    
+    <details>
+    <summary>The below resources were used to solve the task:</summary>
+    
+    - https://www.geeksforgeeks.org/python-extracting-rows-using-pandas-iloc/
+    - https://www.geeksforgeeks.org/append-extend-python/
+    - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    
+    </details>
+    
+- __Generate pair scatter plots__
+  
+  It outputs a scatter plot of each pair of variables of the Iris dataset, prompting the user to choose to compute the plot with or without outliers.
+  
+  <details>
+  <summary>The below resources were used to solve the task:</summary>
+  
+  - https://python-charts.com/correlation/pairs-plot-seaborn/
+  
+  </details>
+  
+- __Generate histograms__
+  
+  It saves a histogram subplot of each variable in the Iris flower dataset as a PNG file.
+  
+  <details>
+  <summary>The below resources were used to solve the task:</summary>
+  
+  - https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
+  - https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
+  - https://napsterinblue.github.io/notes/python/viz/subplots/
+  - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+  
+  </details>
+  
+- __Compute PCA__
+  
+  It computes a PCA and reduces the 4-dimensional Iris dataset to 2 dimensions/features, outputing a scatter plot of the principal components making it easier to understand how are species distributed.
+  
+  <details>
+  <summary>The below resources were used to solve the task:</summary>
+  
+  - https://www.turing.com/kb/guide-to-principal-component-analysis
+  - https://towardsdatascience.com/a-step-by-step-introduction-to-pca-c0d78e26a0dd
+  - https://builtin.com/machine-learning/pca-in-python
+  - https://saturncloud.io/blog/what-is-sklearn-pca-explained-variance-and-explained-variance-ratio-difference
+  - https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+  - https://docs.python.org/3/library/os.path.html
+  - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
+  
+  </details>
+
 
 
 ### Data Source
