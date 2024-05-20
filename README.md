@@ -147,7 +147,7 @@ The Iris flower dataset was created by the British statistician and biologist Ro
 
 ### Program Inspiration
 
-I wanted to create a user-centric program that presents several analysis options, ensuring a scripting oriented-project opposed to what I had done for the other module, which was done on a Jupyter Notebook. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
+I wanted to create an user-centric program that presents several analysis options, ensuring a scripting oriented-project opposed to what I had done for the other module, which was done on a Jupyter Notebook. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
 
 In terms of the concepts used, I incorporated what was shown in the lectures as well as some functions and modules from the weekly tasks: command-line arguments, creating text files, saving files, reading CSVs, try-except blocks, if statements, for loops, etc. 
 
