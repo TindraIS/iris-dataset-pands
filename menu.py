@@ -23,7 +23,7 @@ def closing_window(root):
     '''
     if messagebox.askokcancel('Quit', 'Are you sure you want to exit?'):
         root.destroy()
-        os._exit('EX_OK') # EX_OK code passed to specify that no error occurred, making this function preferred over sys_exit() 
+        os._exit(os.EX_OK) # EX_OK code passed to specify that no error occurred, making this function preferred over sys_exit() 
                           # which raises an exception
 
 
