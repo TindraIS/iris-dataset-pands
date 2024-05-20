@@ -17,13 +17,21 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
       <summary>The below resources were used to solve the task:</summary>
         <p>
   - https://realpython.com/pandas-groupby/
+
   - https://realpython.com/python-for-loop/
+
   - https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/ 
+
   - https://docs.python.org/3/library/functions.html#open
+
   - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+
   - https://docs.python.org/3/library/os.path.html
+
   - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+
   - https://docs.python.org/3/library/tkinter.messagebox.html
+  
   - https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
         </p>
       </details>
@@ -42,13 +50,21 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
         <summary>The below resources were used to solve the task:</summary>
           <p>
       - https://www.geeksforgeeks.org/detect-and-remove-the-outliers-using-python/
+
       - https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/box-whisker-plots/a/identifying-outliers-iqr-rule
+
       - https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.select_dtypes.html
+
       - https://numpy.org/doc/stable/reference/generated/numpy.where.html
+
       - https://realpython.com/python-zip-function/
+
       - https://docs.python.org/3/library/functions.html#open
+
       - https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+
       - https://docs.python.org/3/library/os.path.html
+
       - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
           </p>
         </details>
@@ -61,7 +77,9 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
         <summary>The below resources were used to solve the task:</summary>
           <p>
       - https://www.geeksforgeeks.org/python-extracting-rows-using-pandas-iloc/
+
       - https://www.geeksforgeeks.org/append-extend-python/
+
       - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
           </p>
         </details>
@@ -87,8 +105,11 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
     <summary>The below resources were used to solve the task:</summary>
       <p>
     - https://matplotlib.org/stable/gallery/color/named_colors.html#list-of-named-colors
+
     - https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
+
     - https://napsterinblue.github.io/notes/python/viz/subplots/
+
     - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
       </p>
     </details>
@@ -103,11 +124,17 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
     <summary>The below resources were used to solve the task:</summary>
       <p>
     - https://www.turing.com/kb/guide-to-principal-component-analysis
+
     - https://towardsdatascience.com/a-step-by-step-introduction-to-pca-c0d78e26a0dd
+
     - https://builtin.com/machine-learning/pca-in-python
+
     - https://saturncloud.io/blog/what-is-sklearn-pca-explained-variance-and-explained-variance-ratio-difference
+
     - https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+
     - https://docs.python.org/3/library/os.path.html
+
     - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
       </p>
     </details>
