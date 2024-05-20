@@ -282,7 +282,6 @@ def outliers_summary(df):
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Descriptive summary function successfully finished.")
 
-
 def outliers_cleanup(df):
     '''
     Using the same logic as outliers_summary(df), this function removes the outliers present in the Iris dataset for each of the species.
@@ -364,7 +363,7 @@ def outliers_cleanup(df):
         
 
 # _____________________ HISTOGRAM _____________________
-def generate_histogram(df):
+def generate_histogram(df, file_name):
     '''
     This function saves a histogram subplot of each variable in the Iris flower dataset as a PNG file.
     '''
@@ -423,7 +422,7 @@ def generate_histogram(df):
 
     # III.
     # Call 'save_csv_file' function from helpers.py module to save the plot as a PNG
-    file_path = helpers.save_plot('results', 'IV.histograms.png', fig)
+    file_path = helpers.save_plot('results', file_name, fig)
     
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Generate histograms", "A histogram of each variable will be plotted and saved in the results directory. Please click OK to open the file.")
@@ -443,8 +442,6 @@ def generate_histogram(df):
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Histogram function successfully finished.")
 
-
-
 def generate_histogram_options(df,df_cleaned):
 
     '''
@@ -456,13 +453,13 @@ def generate_histogram_options(df,df_cleaned):
     response = messagebox.askyesno("Generate histogram", "Would you like to generate the histogram without the outliers?")
 
     if response:
-        generate_histogram(df_cleaned)
+        generate_histogram(df_cleaned, 'IV.histograms_cleaned.png')
     else:
-        generate_histogram(df)
+        generate_histogram(df, 'IV.histograms_original.png')
 
 
 # _____________________ PAIRPLOT _____________________
-def generate_pairplot(df):
+def generate_pairplot(df, file_name):
 
     '''
     This function outputs a scatter plot of each pair of variables of the Iris dataset.
@@ -483,7 +480,7 @@ def generate_pairplot(df):
 
     # II.
     # Call 'save_plot' function from helpers.py module to save the plot as a PNG
-    save_plot = helpers.save_plot('results', 'III.pairplot.png', plt)
+    save_plot = helpers.save_plot('results', file_name, plt)
     
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
@@ -514,13 +511,13 @@ def generate_pairplot_options(df,df_cleaned):
     response = messagebox.askyesno("Generate pair plot", "Would you like to generate the pair scatter plot without the outliers?")
 
     if response:
-        generate_pairplot(df_cleaned)
+        generate_pairplot(df_cleaned, 'III.pairplot_cleaned.png')
     else:
-        generate_pairplot(df)
+        generate_pairplot(df, 'III.pairplot_original.png')
 
 
 # _____________________ PCA _____________________
-def perform_PCA(df):
+def perform_PCA(df, file_name):
 
     '''
     This function computes a PCA and reduces the 4-dimensional Iris dataset to 2 dimensions/features, outputing 
@@ -599,7 +596,7 @@ def perform_PCA(df):
 
     # II.
     # Call 'save_plot' function from helpers.py module to save the plot as a PNG
-    file_path = helpers.save_plot('results', 'V.PCA.png', plt)
+    file_path = helpers.save_plot('results', file_name, plt)
     
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Principal Componenent Analysis", "A scatter plot of the computed PCA will be created and saved in the results directory. Please click OK to open the file.")
@@ -619,7 +616,6 @@ def perform_PCA(df):
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Pairplot function successfully finished.")
 
-
 def perform_PCA_options(df,df_cleaned):
 
     '''
@@ -631,6 +627,6 @@ def perform_PCA_options(df,df_cleaned):
     response = messagebox.askyesno("Compute PCA", "Would you like to perform the PCA without the outliers?")
 
     if response:
-        perform_PCA(df_cleaned)
+        perform_PCA(df_cleaned, 'V.PCA_cleaned.png')
     else:
-        perform_PCA(df)
+        perform_PCA(df, 'V.PCA_original.png')
