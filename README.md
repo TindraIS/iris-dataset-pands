@@ -3,11 +3,38 @@
   <img alt="Light header" src="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/light_header.png">
 </picture>
 
+This repository was created in the context of the __Programming &amp; Scripting module__ @ ATU, and contains a program named _Petalist_ which performs an analysis of the Iris flower dataset. [^1] [^2] [^3]
+
+## Contents
+
+```
+pands-project/
+├── images/
+│   ├── dark_header.png              # README header displayed whenever GitHub's theme is dark
+│   ├── dark_header.png              # README header displayed whenever GitHub's theme is light
+│   └── menu_background.png          # Background image displayed in tkinter GUI
+├── results/
+│   ├── I.variables_summary.txt      # Output of tools.descriptive_summary(df)
+│   ├── II.dataframe_cleaned.csv     # Output of tools.outliers_cleanup(df)
+│   └── II.outliers_summary.txt      # Output of tools.outliers_summary(df)
+│   └── III.pairplot_cleaned.png     # Output of tools.generate_pairplot(df) & assigment mandatory task
+│   └── III.pairplot_original.png    # Output of tools.generate_pairplot(df) & assigment mandatory task
+│   └── IV.histograms_cleaned.png    # Output of tools.generate_histogram(df) & assigment mandatory task
+│   └── IV.histograms_original.png   # Output of tools.generate_histogram(df) & assigment mandatory task
+│   └── V.PCA_cleaned.png            # Output of tools.perform_PCA(df)
+│   └── V.PCA_original.png           # Output of tools.perform_PCA(df)
+├── analysis.py                      # Program entry point
+├── error.log                        # File capturing info on errors that occur in analysis.py
+├── menu.py                          # Module containing the function that computes the GUI with tkinter when analysis.py is run
+├── tools.py                         # Module containing functions that perform the core tasks on the menu.py
+├── helpers.py                       # Module containing helper functions pertaining to saving and creating files
+├── .gitignore                       # File specifying all the untracked files that Git should ignore
+└── README.md                        # This file with the project description
+```
 
 ## Description
 
-### Overview
-This repository was created in the context of the __Programming &amp; Scripting module__ @ ATU, and contains a program named _Petalist_ which performs an analysis of the Iris flower dataset. [^1] [^2] [^3]
+  ### Overview
 
 When running `analysis.py`, _the program entry point_, the `menu.py` module is triggered and a [graphic user interface (GUI)](https://raw.githubusercontent.com/TindraIS/pands-project/main/images/menu_screenshot.png) is computed with the tkinter library, displaying five clickable analysis options. When one of the options is selected, the corresponding function is called back in `tools.py` and the output is saved in the /results directory.
 
@@ -114,11 +141,11 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
 
 
 
-### Data Source
+  ### Data Source
 
 The Iris flower dataset was created by the British statistician and biologist Ronald Fisher in his 1936 paper _The use of multiple measurements in taxonomic problems as an example of linear discriminant analysis_. It consists of 50 samples from each of three species of Iris (Iris setosa, Iris virginica and Iris versicolor), including measurements in centimeters for the length and the width of the sepals and petals. 
 
-### Program Inspiration
+  ### Program Inspiration
 
 I wanted to create a user-centric program that presents several analysis options, ensuring a scripting oriented-project opposed to what I had done for the other module, which was done on a Jupyter Notebook. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
 
@@ -128,35 +155,12 @@ After adding the outliers function, I needed a way to ask the user if the analys
 
 Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
 
-### Commentary
+  ### Commentary & References
 
 The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
 
 
 
-## Contents
-
-```
-pands-project/
-├── images/
-│   ├── dark_header.png              # README header displayed whenever GitHub's theme is dark
-│   ├── dark_header.png              # README header displayed whenever GitHub's theme is light
-│   └── menu_background.png          # Background image displayed in tkinter GUI
-├── results/
-│   ├── I.variables_summary.txt      # Output of tools.descriptive_summary(df)
-│   ├── II.dataframe_cleaned.csv     # Output of tools.outliers_cleanup(df)
-│   └── II.outliers_summary.txt      # Output of tools.outliers_summary(df)
-│   └── III.pairplot.png             # Output of tools.generate_pairplot(df) & assigment mandatory task
-│   └── IV.histograms.png            # Output of tools.generate_histogram(df) & assigment mandatory task
-│   └── V.PCA.png                    # Output of tools.perform_PCA(df)
-├── analysis.py                      # Program entry point
-├── error.log                        # File capturing info on errors that occur in analysis.py
-├── menu.py                          # Module containing the function that computes the GUI with tkinter when analysis.py is run
-├── tools.py                         # Module containing functions that perform the core tasks on the menu.py
-├── helpers.py                       # Module containing helper functions pertaining to saving and creating files
-├── .gitignore                       # File specifying all the untracked files that Git should ignore
-└── README.md                        # This file with the project description
-```
 
 
 ## Getting Started

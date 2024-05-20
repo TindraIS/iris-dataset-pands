@@ -82,7 +82,7 @@ def descriptive_summary(df):
         https://realpython.com/python-for-loop/
         https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
 
-    III. Call the save_text_file() function in helpers.py module to save summary in a txt file with writer mode. 
+    III. Call the save_text_file() function from helpers.py module to save summary in a txt file with writer mode. 
         https://docs.python.org/3/library/functions.html#open
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
@@ -186,7 +186,7 @@ def outliers_summary(df):
         https://realpython.com/python-zip-function/
 
     V.  Compile the outliers_summary list items into one string before writing to file to avoid TypeError: write() argument must be str, not list.
-        Then, call the save_text_file() function in helpers.py module to save summary in a txt file with writer mode. 
+        Then, call the save_text_file() function from helpers.py module to save summary in a txt file with writer mode. 
         https://docs.python.org/3/library/functions.html#open
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
