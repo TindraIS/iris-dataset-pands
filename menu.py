@@ -13,9 +13,11 @@ import tkinter.font as font
 import os
 import tools
 
+#____________________________ OPENING MENU ____________________________
+
 def closing_window(root):
     '''
-    This function ensures the program exits completely after clicking X, without triggering an error.
+    This function ensures the program exits completely after closing tkinter GUI, without triggering an error.
     https://stackoverflow.com/questions/110923/how-do-i-close-a-tkinter-window
     https://stackoverflow.com/questions/67421583/python-tkinter-window-dont-close-with-root-quit-when-using-os-system
     https://stackoverflow.com/questions/9591350/what-is-difference-between-sys-exit0-and-os-exit0
@@ -26,17 +28,15 @@ def closing_window(root):
         os._exit(os.EX_OK) # EX_OK code passed to specify that no error occurred, making this function preferred over sys_exit() 
                           # which raises an exception
 
-
 def opening_menu(username, df, df_cleaned):
-
     '''
     This function computes a GUI using the tkinter library, displaying four clickable analysys options. Each of the
     options trigger a different function from tools.py: getting a descriptive summary, identifying and 
-    handling outliers, generating pair scatter plots, and generating histograms. 
+    handling outliers, generating pair scatter plots, generating histograms, and compuTe PCA. 
+    https://www.geeksforgeeks.org/popup-menu-in-tkinter/
+    https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     '''
 
-    # https://www.geeksforgeeks.org/popup-menu-in-tkinter/
-    # https://www.geeksforgeeks.org/tkinter-cheat-sheet/
     # Create the main window
     root = tk.Tk()
     root.title("PETALIST || Iris Dataset Analysis")
@@ -75,6 +75,12 @@ def opening_menu(username, df, df_cleaned):
                       text="Welcome to Petalist, the Iris dataset analysis \nprogram. Please select one of the options below:", 
                       font=font_label_text, anchor='w')
     label2.place(relx=0.50, rely=0.4, anchor="sw")
+    
+    # Create buttons
+    # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
+    # https://stackoverflow.com/questions/70406400/understanding-python-lambda-behavior-with-tkinter-button
+    # https://tk-tutorial.readthedocs.io/en/latest/button/button.html
+    # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/button.html
 
     # Define buttons configurations
     button_height = 1
@@ -83,29 +89,48 @@ def opening_menu(username, df, df_cleaned):
     button_justify = "left"
     button_bg = "#5E7F73"
     button_fg = "white"
-    
-    # Create buttons
-    # Colours: https://cs111.wellesley.edu/archive/cs111_fall14/public_html/labs/lab12/tkintercolor.html
-    # https://stackoverflow.com/questions/70406400/understanding-python-lambda-behavior-with-tkinter-button
-    # https://tk-tutorial.readthedocs.io/en/latest/button/button.html
-    # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/button.html
 
-    # Button 1--------------------------------------------------------------------
+    # Call button functions
+    button_1(root,df,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons)
+    button_2(root,df,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons,font_options)
+    button_3(root,df,df_cleaned,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons)
+    button_4(root,df,df_cleaned,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons)
+    button_5(root,df,df_cleaned,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons)
+
+    # Maximize the window
+    root.state('zoomed')
+
+    # Run the main event loop
+    root.mainloop()
+
+
+#____________________________ OPENING MENU BUTTONS ____________________________
+
+def button_1(root,df,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons):
+    '''
+    This function is part of the GUI setup in the opening_menu function, creating and configuring a button within the menu. 
+    When clicked, it triggers the descriptive_summary function from the tools module, which performs a descriptive summary 
+    of the DataFrame.
+    '''
 
     button1 = tk.Button(root, 
-                        text=" I .get descriptive summary", 
-                        command=lambda: tools.descriptive_summary(df),
-                        width=button_width, 
-                        height=button_height, 
-                        anchor=button_anchor, 
-                        justify=button_justify, 
-                        bg=button_bg, 
-                        fg=button_fg)
-    button1.place(relx=0.60, rely=0.5, anchor="center")  # Place button relative to the center of the window
+                    text=" I .get descriptive summary", 
+                    command=lambda: tools.descriptive_summary(df),
+                    width=button_width, 
+                    height=button_height, 
+                    anchor=button_anchor, 
+                    justify=button_justify, 
+                    bg=button_bg, 
+                    fg=button_fg)
+    button1.place(relx=0.60, rely=0.5, anchor="center")  
     button1['font'] = font_buttons
 
-
-    # Button 2 --------------------------------------------------------------------
+def button_2(root,df,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons,font_options):
+    '''
+    This function is part of the GUI setup in the opening_menu function, creating and configuring a button within the menu. 
+    This option menu allows the user to choose between summarizing outliers or removing them from the dataset. When an option 
+    is selected, the corresponding function from the tools module is triggered. 
+    '''
 
     # Create the list of options & a dictionary mapping options to their respective functions
     options_list = ["Get a summary of outliers", "Remove outliers from the dataset"] 
@@ -136,8 +161,13 @@ def opening_menu(username, df, df_cleaned):
     for option in options_list:
         button2["menu"].entryconfig(option, command=lambda opt=option: option_functions[opt](df))
 
-    # Button 3 --------------------------------------------------------------------
-
+def button_3(root,df,df_cleaned,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons):
+    '''
+    This function is part of the GUI setup in the opening_menu function, creating and configuring a button within the menu. 
+    When clicked, it triggers the generate_pairplot_options function from the tools module, which prompts the user to choose 
+    whether to create a scatter pair plot with or without ouliers.
+    '''
+        
     button3 = tk.Button(root, 
                         text="III .generate pair scatter plot", 
                         command=lambda: tools.generate_pairplot_options(df,df_cleaned),
@@ -150,22 +180,31 @@ def opening_menu(username, df, df_cleaned):
     button3.place(relx=0.60, rely=0.7, anchor="center") 
     button3['font'] = font_buttons
 
-    
-    # Button 4 --------------------------------------------------------------------
+def button_4(root,df,df_cleaned,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons):
+    '''
+    This function is part of the GUI setup in the opening_menu function, creating and configuring a button within the menu. 
+    When clicked, it triggers the generate_histogram_options function from the tools module, which prompts the user to choose 
+    whether to create histograms with or without ouliers.
+    '''
     
     button4 = tk.Button(root, 
-                        text="IV .generate histogram",  
-                        command=lambda: tools.generate_histogram_options(df, df_cleaned),
-                        width=button_width, 
-                        height=button_height, 
-                        anchor=button_anchor, 
-                        justify=button_justify, 
-                        bg=button_bg, 
-                        fg=button_fg)
+                            text="IV .generate histograms",  
+                            command=lambda: tools.generate_histogram_options(df, df_cleaned),
+                            width=button_width, 
+                            height=button_height, 
+                            anchor=button_anchor, 
+                            justify=button_justify, 
+                            bg=button_bg, 
+                            fg=button_fg)
     button4.place(relx=0.60, rely=0.8, anchor="center") 
     button4['font'] = font_buttons
-    
-    # Button 5 --------------------------------------------------------------------
+
+def button_5(root,df,df_cleaned,button_width,button_height,button_anchor,button_justify,button_bg,button_fg,font_buttons):
+    '''
+    This function is part of the GUI setup in the opening_menu function, creating and configuring a button within the menu. 
+    When clicked, it triggers the perform_PCA_options function from the tools module, which prompts the user to choose 
+    whether to compute PCA with or without ouliers.
+    '''
     
     button5 = tk.Button(root, 
                         text="V .compute PCA",  
@@ -178,9 +217,3 @@ def opening_menu(username, df, df_cleaned):
                         fg=button_fg)
     button5.place(relx=0.60, rely=0.9, anchor="center")  
     button5['font'] = font_buttons
-
-    # Maximize the window
-    root.state('zoomed')
-
-    # Run the main event loop
-    root.mainloop()
