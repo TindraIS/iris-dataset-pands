@@ -338,15 +338,14 @@ def outliers_cleanup(df):
     # Drop outliers from the original df
     df = df.drop(index=outlier_indices)
     
-
-    # III.
+    # IV.
     # Run 'save_csv_file' function to save the cleaned DataFrame as a CSV file
     file_path = helpers.save_csv_file('results', 'II.dataframe_cleaned.csv', df)
     
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Outliers cleanup", "A CSV file containing the Iris dataset without outliers will be saved in the results directory. Please click OK to open the file.")
 
-    # IV.
+    # V.
     # If response is True save & open the CSV file, otherwise just save the CSV
     if response:
         file_path
@@ -423,27 +422,28 @@ def generate_histogram(df):
     plt.tight_layout()
 
     # III.
-    # Specify folder in which PNG should be saved
-    folder = 'results'
-    file_name = 'IV.histograms.png'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
-
-    # Save plot
-    fig.savefig(fname=file_path)      
-
-    # IV. 
+    # Call 'save_csv_file' function from helpers.py module to save the plot as a PNG
+    file_path = helpers.save_plot('results', 'IV.histograms.png', fig)
+    
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Generate histograms", "A histogram of each variable will be plotted and saved in the results directory. Please click OK to open the file.")
 
-    # If response is True open the file, otherwise do nothing
+    # IV.
+    # If response is True save & open the PNG, otherwise just save the PNG
     if response:
-        fig.show()
+        file_path
+        print(f"\tPlot saved as PNG.")
+        plt.show()
         print(f"\tUser opened the plot.")
     else:
+        file_path
+        print(f"\tPlot saved as PNG")
         print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print("\n\t\u2713 Histogram function successfully finished.")
+
+
 
 def generate_histogram_options(df,df_cleaned):
 
@@ -469,33 +469,39 @@ def generate_pairplot(df):
     '''
 
     # I.
+    print(f"Starting {__name__}/generate_pairplot()")
+
     # Plot a pairplot to analyse the interaction between the different variables
     # https://python-charts.com/correlation/pairs-plot-seaborn/
     sns.pairplot(df, hue="species", corner=False, kind="reg", plot_kws={'line_kws':{'color':'black'}})
 
     # Adjust layout & set subplot suptitle
-    plt.suptitle("Attribute Pairs by Species\n", fontsize=14)
+    plt.suptitle("Attribute Pairs by Species\n\n", fontsize=14)
     plt.tight_layout()
 
+    print(f"\tHistograms have been computed.")
+
     # II.
-    # Specify folder in which PNG should be saved
-    folder = 'results'
-    file_name = 'III.pairplot.png'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
-
-    # Save plot
-    plt.savefig(fname=file_path)      
-
-    # III. 
+    # Call 'save_plot' function from helpers.py module to save the plot as a PNG
+    save_plot = helpers.save_plot('results', 'III.pairplot.png', plt)
+    
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Generate pair scatter plot", "A scatter plot of each pair of variables will be created and saved in the results directory. Please click OK to open the file.")
 
-    # If response is True open the file, otherwise do nothing
+    # III.
+    # If response is True save & open the PNG, otherwise just save the PNG
     if response:
+        save_plot
+        print(f"\tPlot saved as PNG.")
         plt.show()
         print(f"\tUser opened the plot.")
     else:
+        save_plot
+        print(f"\tPlot saved as PNG")
         print(f"\tUser closed the pop-up.")
+    
+    # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    print("\n\t\u2713 Pairplot function successfully finished.")
 
 def generate_pairplot_options(df,df_cleaned):
 
@@ -563,6 +569,7 @@ def perform_PCA(df):
     # Create new DataFrame with the variables created by sklearn when computing the PCA
     pca_df = pd.DataFrame(data=principal_components, columns=['PCA_1', 'PCA_2'])
     pca_df = pd.concat([pca_df, df[['species']]], axis=1)
+    print(f"\PCA has been computed & stored in a DataFrame.")
 
     # IV. 
     # Visualize the PCA result
@@ -588,25 +595,30 @@ def perform_PCA(df):
     plt.ylabel('Principal Component #2')
     plt.title('Principal Component Analysis with 2 Elements\n')
 
-    # V.
-    # Specify folder in which PNG should be saved
-    folder = 'results'
-    file_name = 'V.PCA.png'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
+    print(f"\tHistograms have been computed.")
 
-    # Save plot
-    plt.savefig(fname=file_path)      
-
-    # VI. 
+    # II.
+    # Call 'save_plot' function from helpers.py module to save the plot as a PNG
+    file_path = helpers.save_plot('results', 'V.PCA.png', plt)
+    
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Principal Componenent Analysis", "A scatter plot of the computed PCA will be created and saved in the results directory. Please click OK to open the file.")
 
-    # If response is True open the file, otherwise do nothing
+    # III.
+    # If response is True save & open the PNG, otherwise just save the PNG
     if response:
+        file_path
+        print(f"\tPlot saved as PNG.")
         plt.show()
         print(f"\tUser opened the plot.")
     else:
+        file_path
+        print(f"\tPlot saved as PNG")
         print(f"\tUser closed the pop-up.")
+    
+    # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
+    print("\n\t\u2713 Pairplot function successfully finished.")
+
 
 def perform_PCA_options(df,df_cleaned):
 
