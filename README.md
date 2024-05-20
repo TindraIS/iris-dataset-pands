@@ -3,7 +3,7 @@
   <img alt="Light header" src="https://raw.githubusercontent.com/TindraIS/pands-project/main/images/light_header.png">
 </picture>
 
-
+--- 
 ## Description
 
 This repository was created in the context of the __Programming &amp; Scripting module__ @ ATU, and contains a program named _Petalist_ which performs an analysis of the Iris flower dataset. [^1] [^2] [^3]
@@ -27,14 +27,16 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
   - https://stackoverflow.com/questions/70356069/defining-and-using-a-dictionary-of-colours-in-a-plot
         </p>
       </details>
-    </br>
+
 
   - __Identify and handling outliers__
     - __Get an outlier summary by species__
       
-      It computes a summary of outliers present in the Iris dataset by species, using the Inter Quartile Range (IQR) approach to determine if an entry is an outlier using the below formulas:
-      $$ \text{Lower Bound} = Q_1 - 1.5 \times \text{IQR} $$
-      $$ \text{Upper Bound} = Q_3 + 1.5 \times \text{IQR} $$
+      It computes a summary of outliers present in the Iris dataset by species, using the Inter Quartile Range (IQR) approach to determine if an entry is an outlier using the below formulas: [^4] [^5]
+      
+      ![Lower Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Lower&space;Bound}=Q_1-1.5\times\text{IQR}})
+      
+      ![Upper Bound](https://latex.codecogs.com/svg.image?{\color{Golden}\text{Upper&space;Bound}=Q_3&plus;1.5\times\text{IQR}})
 
       <details>
         <summary>The below resources were used to solve the task:</summary>
@@ -50,7 +52,6 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
       - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
           </p>
         </details>
-      </br>
 
     - __Remove outliers from the dataset__
 
@@ -64,7 +65,7 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
       - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
           </p>
         </details>
-      </br>
+
 
 - __Generate pair scatter plots__
 
@@ -76,7 +77,7 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
     - https://python-charts.com/correlation/pairs-plot-seaborn/
       </p>
     </details>
-  </br>
+
 
 - __Generate histograms__
 
@@ -91,7 +92,7 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
     - https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
       </p>
     </details>
-  </br>
+
 
 - __Compute PCA__
 
@@ -110,8 +111,6 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
     - https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
       </p>
     </details>
-  </br>
-
 
 
 ### Data Source
@@ -131,6 +130,8 @@ Had I more time and fewer kids (_just kidding_), I would have created more analy
 ### Commentary
 
 The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
+
+
 
 ## Contents
 
@@ -155,6 +156,7 @@ pands-project/
 └── README.md                        # This file
 ```
 
+
 ## Getting Started
 
 ### Dependencies
@@ -171,9 +173,11 @@ pands-project/
     - Scikit-learn
 * Any IDE of personal choice to run the notebook in a local environment. The author used Visual Studio Code in the development. 
 
+
 ## Get Help
 
 For any issues with the code, please refer to GitHub's Issues section and create a new ticket.
+
 
 ## Author
 Irina S.
@@ -182,3 +186,5 @@ Irina S.
 [^1]: [Iris flower dataset Wikipedia page](https://en.wikipedia.org/wiki/Iris_flower_data_set)
 [^2]: [README header inspired by Pandas GitHub Repository](https://github.com/pandas-dev/pandas)
 [^3]: [The Hitchhiker’s Guide to Python - Structure of the repository](https://docs.python-guide.org/writing/structure/#structure-of-the-repository)
+[^4]: [Codecogs Latex Equation Editor ](https://latex.codecogs.com/eqneditor/editor.php)
+[^5]: [StackOverflow: How to render LaTeX in README.md on GitHub](https://stackoverflow.com/questions/35498525/latex-rendering-in-readme-md-on-github)
