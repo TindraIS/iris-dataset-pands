@@ -34,7 +34,7 @@ pands-project/
 
 ## Description
 
-  ### Overview
+### Overview
 
 When running `analysis.py`, _the program entry point_, the `menu.py` module is triggered and a [graphic user interface (GUI)](https://raw.githubusercontent.com/TindraIS/pands-project/main/images/menu_screenshot.png) is computed with the tkinter library, displaying five clickable analysis options. When one of the options is selected, the corresponding function is called back in `tools.py` and the output is saved in the /results directory.
 
@@ -141,11 +141,11 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
 
 
 
-  ### Data Source
+### Data Source
 
 The Iris flower dataset was created by the British statistician and biologist Ronald Fisher in his 1936 paper _The use of multiple measurements in taxonomic problems as an example of linear discriminant analysis_. It consists of 50 samples from each of three species of Iris (Iris setosa, Iris virginica and Iris versicolor), including measurements in centimeters for the length and the width of the sepals and petals. 
 
-  ### Program Inspiration
+### Program Inspiration
 
 I wanted to create a user-centric program that presents several analysis options, ensuring a scripting oriented-project opposed to what I had done for the other module, which was done on a Jupyter Notebook. Initially, I considered using `argparse` for all the options, but after further research, I found an [article](https://www.geeksforgeeks.org/popup-menu-in-tkinter/) about creating pop-up menus with the tkinter library. Happy with the challenge, I read the documentation and began building on top of it.
 
@@ -155,7 +155,7 @@ After adding the outliers function, I needed a way to ask the user if the analys
 
 Had I more time and fewer kids (_just kidding_), I would have created more analysis options, such as correlation analysis or linear regression.
 
-  ### Commentary & References
+### Commentary & References
 
 The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
 
