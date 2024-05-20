@@ -16,6 +16,7 @@ import pandas as pd
 import numpy as np
 import os
 import sys
+import helpers
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -81,16 +82,14 @@ def descriptive_summary(df):
         https://realpython.com/python-for-loop/
         https://www.geeksforgeeks.org/how-to-iterate-over-dataframe-groups-in-python-pandas/
 
-    III. Save summary in a txt file with writer mode. As per Python official documentation, the file param in open() is a path-like object giving the pathname.
-        Therefore, to keep the repository nicely organised, we specify the folder where the file should be saved. As the program is meant to be ran on different
-        machines, the os module is used to construct a full path, as a hardcoded absolute path would throw an error.  Also, the file_path makes use of os.path.join 
-        to ensure compatibility across different operating systems. 
+    III. Call the save_text_file() function in helpers.py module to save summary in a txt file with writer mode. 
         https://docs.python.org/3/library/functions.html#open
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
 
-    IV. Show message box & open the summary.txt file with the default text editor. As per Python documentation, 
-        askokcancel returns a boolean value, so we check if response is True(OK) to open the file; otherwise we do nothing.
+    IV. Show message box prompting the user to choose to open the the file or not. As per Python documentation, 
+        askokcancel returns a boolean value, so we check if response is True(OK) to save & open the file using 
+        the file_path returned by save_text_file() function; if False the txt file will just be saved.
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/tkinter.messagebox.html
     '''
@@ -136,25 +135,22 @@ def descriptive_summary(df):
     print(f'\tSpecies summary computed.')
 
     # III.
-    # Specify folder in which txt should be saved
-    folder = 'results'
-    file_name = 'I.variables_summary.txt'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
-
-    # Save summary in a txt file
-    with open(file_path, 'w', encoding='utf-8') as writer:
-            writer.write(summary)
-    print(f"\tDescriptive summaries added to the txt file.")
-
-    # IV. 
+    # Run save txt file function to save the summary in a txt file
+    file_path = helpers.save_text_file('results', 'I.variables_summary.txt', summary)
+    
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Descriptive summary", "A text file with a descriptive summary of each variable will be saved in the results directory. Please click OK to open the file.")
 
-    # If response is True open the file, otherwise do nothing
+    # IV.
+    # If response is True save & open the txt file, otherwise just save the txt file
     if response:
+        file_path
+        print(f"\tDescriptive summaries added to the txt file.")
         os.startfile(file_path)
         print(f"\tUser opened the file.")
     else:
+        file_path
+        print(f"\tDescriptive summaries added to the txt file.")
         print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
@@ -189,19 +185,17 @@ def outliers_summary(df):
         If no outliers are found, a message indicating no outliers is appended to the list.
         https://realpython.com/python-zip-function/
 
-    V.  The outlier information is written to a text file, with each item in the outlier_summary list being written line by line 
-        with writer mode. As per Python official documentation, the file param in open() is a path-like object giving the pathname.
-        Therefore, to keep the repository nicely organised, we specify the folder where the file should be saved. 
-        As the program is meant to be ran on different machines, the os module is used to construct a full path, as a hardcoded absolute 
-        path would throw an error. Also, the file_path makes use of os.path.join to ensure compatibility across different operating systems. 
+    V.  Compile the outliers_summary list items into one string before writing to file to avoid TypeError: write() argument must be str, not list.
+        Then, call the save_text_file() function in helpers.py module to save summary in a txt file with writer mode. 
         https://docs.python.org/3/library/functions.html#open
         https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
         https://docs.python.org/3/library/os.path.html
-    
-    VI. After running the analysis, ask the user if they want to proceed with opening the txt file and viewing the results.
-        If the user clicks OK, the generated file is opened using os.startfile.
-        If the user clicks Cancel, the program does nothing apart from printing a debugging message.
-        https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/tkMessageBox.html
+
+    VI. Show message box prompting the user to choose to open the the file or not. As per Python documentation, 
+        askokcancel returns a boolean value, so we check if response is True(OK) to save & open the file using 
+        the file_path returned by save_text_file() function; if False the txt file will just be saved.
+        https://stackoverflow.com/questions/72626730/python-launch-text-file-in-users-default-text-editor
+        https://docs.python.org/3/library/tkinter.messagebox.html
     '''
 
     # I. 
@@ -262,36 +256,36 @@ def outliers_summary(df):
             else:
                 outlier_summary.append(f'\n\t\tNo outliers found for {var}\n')
                 print(f"\t\tOutlier summary for {var} appended to the array.")
-    
+
     # V.
-    # Specify folder in which txt should be saved
-    folder = 'results'
-    file_name = 'II.outliers_summary.txt'
-    file_path = os.path.join(os.getcwd(), folder, file_name)
+    # Compile the list items into one string before writing to file to avoid TypeError: write() argument must be str, not list
+    outlier_summary = ''.join(outlier_summary)
 
-    # Write the collected outlier information to a text file
-    with open(file_path, "w") as file:
-        for item in outlier_summary:
-            file.write(item)
-        print(f"\t\tOutlier summary for all variables for appended to the txt file.")
-
-    # VI. 
+    # Run save txt file function to save the summary in a txt file
+    file_path = helpers.save_text_file('results', 'II.outliers_summary.txt', outlier_summary)
+    
     # Display message box with "OK" and "Cancel" buttons
     response = messagebox.askokcancel("Outlier summary", "A text file with an outlier summary by species will be saved in the results directory. Please click OK to open the file")
 
-    # If response is True open the file, otherwise do nothing
+    # VI.
+    # If response is True save & open the txt file, otherwise just save the txt file
     if response:
+        file_path
+        print(f"\Outliers summary added to the txt file.")
         os.startfile(file_path)
         print(f"\tUser opened the file.")
     else:
+        file_path
+        print(f"\tOutliers summary added to the txt file.")
         print(f"\tUser closed the pop-up.")
     
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
-    print("\n\t\u2713 Outliers summary function successfully finished.")
+    print("\n\t\u2713 Descriptive summary function successfully finished.")
+
 
 def outliers_cleanup(df):
     '''
-    Using the same logic as outliers_summary(df), this function computes a summary of outliers present in the Iris dataset by species.
+    Using the same logic as outliers_summary(df), this function removes the outliers present in the Iris dataset for each of the species.
     '''
 
     # I.
@@ -371,7 +365,7 @@ def outliers_cleanup(df):
 # _____________________ HISTOGRAM _____________________
 def generate_histogram(df):
     '''
-    This function saves a histogram of each variable in the Iris dataset to PNG files.
+    This function saves a histogram subplot of each variable in the Iris flower dataset as a PNG file.
     '''
 
     print(f"Starting {__name__}/generate_histogram()")
