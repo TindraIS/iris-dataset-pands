@@ -6,6 +6,7 @@
 
 ## Description
 
+### Overview
 This repository was created in the context of the __Programming &amp; Scripting module__ @ ATU, and contains a program named _Petalist_ which performs an analysis of the Iris flower dataset. [^1] [^2] [^3]
 
 When running `analysis.py`, _the program entry point_, the `menu.py` module is triggered and a [graphic user interface (GUI)](https://raw.githubusercontent.com/TindraIS/pands-project/main/images/menu_screenshot.png) is computed with the tkinter library, displaying five clickable analysis options. When one of the options is selected, the corresponding function is called back in `tools.py` and the output is saved in the /results directory.
