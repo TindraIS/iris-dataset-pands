@@ -1,5 +1,5 @@
 '''
-This files handles repetitive tasks pertaining to saving and creating files which performed multiple times in tools.py
+This file handles repetitive tasks pertaining to saving and creating files which performed multiple times in tools.py
 '''
 
 import os

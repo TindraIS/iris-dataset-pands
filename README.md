@@ -153,8 +153,9 @@ pands-project/
 ├── error.log                        # File capturing info on errors that occur in analysis.py
 ├── menu.py                          # Module containing the function that computes the GUI with tkinter when analysis.py is run
 ├── tools.py                         # Module containing functions that perform the core tasks on the menu.py
+├── helpers.py                       # Module containing helper functions pertaining to saving and creating files
 ├── .gitignore                       # File specifying all the untracked files that Git should ignore
-└── README.md                        # This file
+└── README.md                        # This file with the project description
 ```
 
 
