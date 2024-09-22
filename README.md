@@ -144,10 +144,6 @@ When running `analysis.py`, _the program entry point_, the `menu.py` module is t
 
 The Iris flower dataset was created by the British statistician and biologist Ronald Fisher in his 1936 paper _The use of multiple measurements in taxonomic problems as an example of linear discriminant analysis_. It consists of 50 samples from each of three species of Iris (Iris setosa, Iris virginica and Iris versicolor), including measurements in centimeters for the length and the width of the sepals and petals. 
 
-### Commentary & References
-
-The step-by-step logic and references have been added at the beginning of the functions instead of inline to make the code easier to read and work with. No insights regarding the interpretation of data gathered have been produced, but rather we kept true to the assingment brief of explaining how Python can be used in data analysis as well as its outputs.
-
 
 ## Getting Started
 
